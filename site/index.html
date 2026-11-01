@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Café de la Paix — Restaurant ouvrier à Bellerive-sur-Allier</title>
+  <meta name="description" content="Café de la Paix, restaurant ouvrier à Bellerive-sur-Allier. Cuisine maison, formule du midi à 18 € du lundi au samedi, soirées spéciales le vendredi soir, terrasse.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Playfair+Display:wght@700;900&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="bandeau-statut" id="statut" aria-live="polite">&nbsp;</div>
+
+  <header class="entete" id="haut">
+    <div class="conteneur entete__inner">
+      <a href="#haut" class="logo">
+        <span class="logo__nom">Café de la Paix</span>
+        <span class="logo__lieu">Bellerive-sur-Allier</span>
+      </a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav" id="nav">
+        <a href="#menu">Menu de la semaine</a>
+        <a href="#vendredi">Vendredi soir</a>
+        <a href="#terrasse">La terrasse</a>
+        <a href="#infos">Infos pratiques</a>
+        <a href="#" class="btn btn--petit js-tel" hidden>Appeler</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ACCUEIL -->
+    <section class="hero">
+      <img class="hero__img" src="images/terrasse-pergola.jpg" alt="La terrasse ombragée du Café de la Paix, sous la pergola en bois">
+      <div class="hero__voile"></div>
+      <div class="conteneur hero__contenu">
+        <p class="surtitre">Restaurant ouvrier · Bellerive-sur-Allier</p>
+        <h1>Café de la Paix</h1>
+        <p class="hero__texte">Cuisine maison, service rapide et prix honnêtes.<br>
+          Le midi du lundi au samedi, et le vendredi soir pour nos soirées spéciales.</p>
+        <div class="hero__actions">
+          <a href="#menu" class="btn">Voir le menu de la semaine</a>
+          <a href="#" class="btn btn--clair js-tel" hidden>Réserver par téléphone</a>
+        </div>
+      </div>
+      <div class="tampon" aria-label="Formule du midi à 18 euros">
+        <span class="tampon__haut">Formule du midi</span>
+        <span class="tampon__prix js-prix">18 €</span>
+        <span class="tampon__bas">tout compris</span>
+      </div>
+    </section>
+
+    <div class="store" aria-hidden="true"></div>
+
+    <!-- LA MAISON -->
+    <section class="maison conteneur">
+      <div class="maison__texte">
+        <h2>Ici, on mange bien<br>et on ne traîne pas.</h2>
+        <p>Artisans, gars du chantier, employés du coin ou habitués du quartier : au Café de la Paix, tout le monde est à la même table. Une cuisine de ménage préparée chaque matin, une assiette qui tient au corps et un service qui respecte votre pause déjeuner.</p>
+        <ul class="atouts">
+          <li><strong>Fait maison</strong><span>Plats mijotés, purée maison, desserts du jour.</span></li>
+          <li><strong>Formule complète</strong><span>Entrée, plat, fromage ou dessert, café et ¼ de vin.</span></li>
+          <li><strong>Terrasse au calme</strong><span>À l'abri de la rue, à l'ombre de la pergola.</span></li>
+        </ul>
+      </div>
+      <figure class="maison__photo">
+        <img src="images/plat.jpg" alt="Assiette maison : gratin de pommes de terre, jambon cru, rosette et salade verte" loading="lazy">
+        <figcaption>Gratin maison, charcuterie et salade du jour</figcaption>
+      </figure>
+    </section>
+
+    <!-- MENU DE LA SEMAINE -->
+    <section class="menu" id="menu">
+      <div class="conteneur">
+        <div class="menu__tete">
+          <p class="surtitre surtitre--or">À l'ardoise</p>
+          <h2>Menu de la semaine</h2>
+          <p class="menu__periode" id="periode"></p>
+        </div>
+
+        <div class="formule">
+          <div class="formule__prix"><span>Formule du midi</span><strong class="js-prix">18 €</strong></div>
+          <ul class="formule__contenu" id="formule"></ul>
+        </div>
+
+        <div class="ardoise">
+          <div class="ardoise__grille" id="jours"></div>
+        </div>
+
+        <p class="menu__note">Le menu change chaque semaine selon le marché.
+          <a href="images/menu-semaine.jpg" target="_blank" rel="noopener">Voir le menu imprimé</a></p>
+      </div>
+    </section>
+
+    <!-- VENDREDI SOIR -->
+    <section class="vendredi" id="vendredi">
+      <div class="conteneur vendredi__inner">
+        <div class="vendredi__texte">
+          <p class="surtitre surtitre--clair">Une fois par semaine</p>
+          <h2>Le vendredi soir,<br>on remet le couvert.</h2>
+          <p>La semaine est finie, le café change d'ambiance. Chaque vendredi soir, on vous prépare une soirée spéciale : plat unique, soirée à thème, tablées entre collègues ou entre amis, apéro qui se prolonge en terrasse aux beaux jours.</p>
+          <p>Les places partent vite : pensez à réserver.</p>
+          <a href="#" class="btn btn--clair js-tel" hidden>Réserver ma table</a>
+        </div>
+        <div class="affiche" id="soiree">
+          <p class="affiche__sur">Prochaine soirée</p>
+          <h3 class="affiche__titre">Programme annoncé chaque semaine</h3>
+          <p class="affiche__date">Vendredi · à partir de 19 h</p>
+          <p class="affiche__desc">Le thème de la soirée est affiché à l'ardoise du café. Passez nous voir ou appelez-nous pour connaître le menu.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TERRASSE & BAR -->
+    <section class="terrasse conteneur" id="terrasse">
+      <div class="terrasse__tete">
+        <p class="surtitre">Dehors comme dedans</p>
+        <h2>La terrasse et le bar</h2>
+        <p>Derrière le café, une grande terrasse abritée de la rue : pergola en bois, parasols et lauriers-roses. À l'intérieur, le comptoir et ses bières pression pour le café du matin ou le verre de fin de journée.</p>
+      </div>
+      <div class="galerie">
+        <figure class="galerie__grand">
+          <img src="images/terrasse-pergola.jpg" alt="Tables sous la pergola et terrasse gravillonnée avec parasols" loading="lazy">
+        </figure>
+        <figure>
+          <img src="images/terrasse-bar.jpg" alt="Terrasse en bois avec comptoir extérieur et parasols" loading="lazy">
+        </figure>
+        <figure>
+          <img src="images/bar.jpg" alt="Le comptoir du bar et ses tireuses à bière" loading="lazy">
+        </figure>
+      </div>
+    </section>
+
+    <!-- INFOS PRATIQUES -->
+    <section class="infos" id="infos">
+      <div class="conteneur infos__inner">
+        <div class="infos__bloc">
+          <h2>Infos pratiques</h2>
+
+          <div class="plaque">
+            <p class="plaque__titre">Horaires</p>
+            <table class="horaires" id="horaires"></table>
+          </div>
+
+          <div class="contact">
+            <h3>Nous trouver</h3>
+            <p id="adresse">Café de la Paix<br>03700 Bellerive-sur-Allier</p>
+            <p class="js-tel-ligne" hidden><a href="#" class="lien-tel js-tel-texte"></a></p>
+            <p class="js-facebook" hidden><a href="#" target="_blank" rel="noopener">Suivez-nous sur Facebook</a></p>
+          </div>
+
+          <div class="contact">
+            <h3>Groupes et équipes</h3>
+            <p>Repas d'équipe, fin de chantier, anniversaire du vendredi soir : appelez-nous la veille, on s'organise.</p>
+          </div>
+        </div>
+        <div class="carte">
+          <iframe id="carte" title="Plan d'accès au Café de la Paix" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=Caf%C3%A9%20de%20la%20Paix%20Bellerive-sur-Allier&output=embed"></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pied">
+    <div class="conteneur pied__inner">
+      <p class="pied__nom">Café de la Paix</p>
+      <p>Café · Restaurant · Bar — Bellerive-sur-Allier</p>
+      <p class="pied__petit">© <span id="annee"></span> Café de la Paix. L'abus d'alcool est dangereux pour la santé, à consommer avec modération.</p>
+    </div>
+  </footer>
+
+  <script src="donnees.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

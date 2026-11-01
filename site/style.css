@@ -1,0 +1,268 @@
+/* ===== Café de la Paix — styles ===== */
+:root {
+  --papier: #f5efe3;
+  --papier-fonce: #ebe2d0;
+  --encre: #1d2633;
+  --texte: #3a3f47;
+  --bleu: #2f4a6d;      /* façade */
+  --bleu-nuit: #1b2c44;
+  --brique: #b2392c;    /* enseigne */
+  --or: #a8792b;        /* menu imprimé */
+  --ardoise: #262a2d;
+  --craie: #f1eee6;
+  --rayon: 6px;
+  --titre: "Playfair Display", Georgia, serif;
+  --corps: "Work Sans", system-ui, sans-serif;
+  --craie-font: "Caveat", "Comic Sans MS", cursive;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--texte);
+  font: 400 1.05rem/1.65 var(--corps);
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+a { color: var(--brique); }
+h1, h2, h3 { font-family: var(--titre); color: var(--encre); line-height: 1.1; margin: 0 0 .5em; }
+h2 { font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 900; }
+h3 { font-size: 1.25rem; }
+p { margin: 0 0 1em; }
+
+.conteneur { width: min(1120px, 100% - 32px); margin-inline: auto; }
+
+.surtitre {
+  font-size: .78rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--brique); margin-bottom: .8em;
+}
+.surtitre--or { color: var(--or); }
+.surtitre--clair { color: #f2c46d; }
+
+/* Boutons */
+.btn {
+  display: inline-block; padding: .85em 1.5em; border-radius: var(--rayon);
+  background: var(--brique); color: #fff; text-decoration: none; font-weight: 600;
+  border: 2px solid var(--brique); transition: transform .15s, background .15s;
+}
+.btn:hover { transform: translateY(-2px); background: #9a2f24; border-color: #9a2f24; }
+.btn--clair { background: transparent; border-color: currentColor; color: #fff; }
+.btn--clair:hover { background: #fff; color: var(--encre); border-color: #fff; }
+.btn--petit { padding: .5em 1.1em; font-size: .92rem; }
+[hidden] { display: none !important; }
+
+/* Bandeau statut */
+.bandeau-statut {
+  background: var(--encre); color: var(--craie); text-align: center;
+  font-size: .88rem; padding: .45em 16px; letter-spacing: .02em;
+}
+.bandeau-statut .pastille {
+  display: inline-block; width: .6em; height: .6em; border-radius: 50%;
+  margin-right: .5em; vertical-align: .05em; background: #8a8f96;
+}
+.bandeau-statut .pastille--ouvert { background: #5fcf7a; box-shadow: 0 0 0 3px rgba(95,207,122,.25); }
+
+/* En-tête */
+.entete {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(245, 239, 227, .96); backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--papier-fonce);
+}
+.entete__inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+.logo { text-decoration: none; display: flex; flex-direction: column; line-height: 1; }
+.logo__nom { font-family: var(--titre); font-weight: 900; font-size: 1.5rem; color: var(--bleu-nuit); }
+.logo__lieu { font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: var(--or); margin-top: 4px; }
+.nav { display: flex; align-items: center; gap: 1.6rem; }
+.nav a:not(.btn) { color: var(--encre); text-decoration: none; font-weight: 500; font-size: .95rem; }
+.nav a:not(.btn):hover { color: var(--brique); }
+.burger { display: none; }
+
+/* Hero */
+.hero { position: relative; min-height: min(82vh, 680px); display: flex; align-items: flex-end; overflow: hidden; }
+.hero__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.hero__voile { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,28,40,.15) 0%, rgba(20,28,40,.55) 45%, rgba(20,28,40,.88) 100%); }
+.hero__contenu { position: relative; padding: 0 0 clamp(48px, 9vh, 96px); color: #fff; }
+.hero .surtitre { color: #f2c46d; }
+.hero h1 {
+  color: #fff; font-size: clamp(3rem, 10vw, 6.5rem); font-weight: 900; letter-spacing: -.01em;
+  margin-bottom: .25em; text-shadow: 0 2px 30px rgba(0,0,0,.3);
+}
+.hero__texte { font-size: clamp(1.05rem, 2vw, 1.25rem); max-width: 36em; opacity: .95; }
+.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 1.6em; }
+
+.tampon {
+  position: absolute; right: clamp(16px, 6vw, 90px); top: clamp(24px, 8vh, 70px);
+  width: 150px; height: 150px; border-radius: 50%;
+  background: var(--brique); color: #fff; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  transform: rotate(-10deg); box-shadow: 0 10px 30px rgba(0,0,0,.3);
+  outline: 2px dashed rgba(255,255,255,.6); outline-offset: -10px;
+}
+.tampon__haut, .tampon__bas { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; }
+.tampon__prix { font-family: var(--titre); font-weight: 900; font-size: 2.6rem; line-height: 1.05; }
+
+/* Lambrequin du store (comme la toile de la terrasse) */
+.store {
+  height: 22px;
+  background:
+    radial-gradient(circle at 18px 0, var(--bleu) 17px, transparent 18px) 0 0 / 36px 22px repeat-x;
+  margin-top: -1px;
+}
+
+/* La maison */
+.maison { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: center; padding: clamp(56px, 9vw, 110px) 0; }
+.atouts { list-style: none; padding: 0; margin: 2em 0 0; display: grid; gap: 1.1em; }
+.atouts li { padding-left: 1.6em; position: relative; }
+.atouts li::before { content: ""; position: absolute; left: 0; top: .5em; width: .7em; height: .7em; background: var(--brique); transform: rotate(45deg); }
+.atouts strong { display: block; color: var(--encre); font-size: 1.05rem; }
+.atouts span { font-size: .97rem; }
+.maison__photo { margin: 0; position: relative; }
+.maison__photo img { border-radius: var(--rayon); aspect-ratio: 4 / 5; object-fit: cover; width: 100%; box-shadow: 18px 18px 0 var(--papier-fonce); }
+.maison__photo figcaption { font-family: var(--craie-font); font-size: 1.35rem; color: var(--bleu); margin-top: .9em; text-align: center; }
+
+/* Menu de la semaine */
+.menu { background: var(--papier-fonce); padding: clamp(56px, 9vw, 110px) 0; }
+.menu__tete { text-align: center; margin-bottom: 2.2em; }
+.menu__tete h2 { margin-bottom: .2em; }
+.menu__periode { font-size: .9rem; letter-spacing: .14em; text-transform: uppercase; color: var(--texte); }
+
+.formule {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 28px;
+  border: 2px solid var(--or); border-radius: var(--rayon); padding: 18px 24px;
+  max-width: 820px; margin: 0 auto 2.4em; background: var(--papier);
+}
+.formule__prix { display: flex; align-items: baseline; gap: .5em; }
+.formule__prix span { font-family: var(--titre); font-weight: 700; font-size: 1.35rem; color: var(--encre); }
+.formule__prix strong { font-family: var(--titre); font-weight: 900; font-size: 2rem; color: var(--or); }
+.formule__contenu { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 0; padding: 0; margin: 0; }
+.formule__contenu li { white-space: nowrap; }
+.formule__contenu li + li::before { content: "•"; color: var(--or); margin: 0 .6em; }
+
+.ardoise {
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(255,255,255,.06), transparent 60%),
+    radial-gradient(ellipse at 80% 90%, rgba(255,255,255,.04), transparent 50%),
+    var(--ardoise);
+  border: 14px solid #8a5a33;
+  border-image: linear-gradient(135deg, #9b6a3f, #6e4524 50%, #9b6a3f) 1;
+  box-shadow: 0 20px 40px rgba(0,0,0,.25), inset 0 0 60px rgba(0,0,0,.45);
+  padding: clamp(20px, 4vw, 44px);
+  color: var(--craie);
+}
+.ardoise__grille { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+.jour { padding: 20px clamp(12px, 2vw, 24px); border-bottom: 1px dashed rgba(241,238,230,.22); position: relative; }
+.jour:nth-child(3n+1), .jour:nth-child(3n+2) { border-right: 1px dashed rgba(241,238,230,.22); }
+.jour:nth-last-child(-n+3) { border-bottom: 0; }
+.jour__nom { font-family: var(--craie-font); font-weight: 700; font-size: 2rem; line-height: 1; color: #f2c46d; margin: 0 0 .1em; }
+.jour__date { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; opacity: .6; margin-bottom: .9em; }
+.jour__ligne { font-family: var(--craie-font); font-size: 1.45rem; line-height: 1.2; margin: 0 0 .5em; }
+.jour__ligne small { display: block; font-family: var(--corps); font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; opacity: .55; margin-bottom: .15em; }
+.jour--aujourdhui { background: rgba(242,196,109,.08); }
+.jour--aujourdhui::after {
+  content: "Aujourd'hui"; position: absolute; top: 16px; right: 14px;
+  font-size: .66rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  background: var(--brique); color: #fff; padding: 3px 8px; border-radius: 3px;
+}
+.menu__note { text-align: center; margin-top: 1.8em; font-size: .95rem; }
+
+/* Vendredi soir */
+.vendredi { background: var(--bleu-nuit); color: #dfe5ee; padding: clamp(56px, 9vw, 110px) 0; position: relative; overflow: hidden; }
+.vendredi::before {
+  content: ""; position: absolute; inset: 0; opacity: .5; pointer-events: none;
+  background: radial-gradient(circle at 85% 15%, rgba(242,196,109,.18), transparent 40%);
+}
+.vendredi__inner { position: relative; display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+.vendredi h2 { color: #fff; }
+.vendredi .btn { margin-top: .6em; }
+.affiche {
+  background: var(--papier); color: var(--texte); border-radius: var(--rayon);
+  padding: 36px 32px; text-align: center; transform: rotate(2deg);
+  box-shadow: 0 24px 50px rgba(0,0,0,.35);
+  border-top: 10px solid var(--brique);
+}
+.affiche__sur { font-size: .75rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--brique); }
+.affiche__titre { font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 900; }
+.affiche__date { font-family: var(--craie-font); font-size: 1.6rem; color: var(--bleu); margin-bottom: .6em; }
+.affiche__desc { font-size: .97rem; margin: 0; }
+
+/* Terrasse */
+.terrasse { padding: clamp(56px, 9vw, 110px) 0; }
+.terrasse__tete { max-width: 680px; margin-bottom: 2.2em; }
+.galerie { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; gap: 14px; height: clamp(360px, 48vw, 560px); }
+.galerie figure { margin: 0; overflow: hidden; border-radius: var(--rayon); }
+.galerie img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+.galerie figure:hover img { transform: scale(1.04); }
+.galerie__grand { grid-row: span 2; }
+
+/* Infos pratiques */
+.infos { background: var(--papier-fonce); padding: clamp(56px, 9vw, 110px) 0; }
+.infos__inner { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(32px, 5vw, 64px); align-items: start; }
+.plaque {
+  background: var(--bleu); color: #fff; border-radius: 14px; padding: 22px 26px;
+  border: 3px solid #fff; outline: 3px solid var(--bleu); margin: 1.4em 3px 2em;
+  box-shadow: 0 10px 24px rgba(0,0,0,.15);
+}
+.plaque__titre { font-family: var(--titre); font-weight: 900; font-size: 1.3rem; margin-bottom: .5em; text-align: center; letter-spacing: .04em; }
+.horaires { width: 100%; border-collapse: collapse; font-size: .97rem; }
+.horaires td { padding: .45em 0; border-top: 1px solid rgba(255,255,255,.2); }
+.horaires td:last-child { text-align: right; font-weight: 600; }
+.horaires tr.ferme td:last-child { opacity: .6; font-weight: 400; }
+.horaires tr.aujourdhui td { color: #f2c46d; }
+.contact { margin-bottom: 1.6em; }
+.contact h3 { margin-bottom: .3em; }
+.lien-tel { font-family: var(--titre); font-weight: 700; font-size: 1.5rem; text-decoration: none; }
+.carte { border-radius: var(--rayon); overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,.12); height: 100%; min-height: 420px; }
+.carte iframe { width: 100%; height: 100%; min-height: 420px; border: 0; display: block; }
+
+/* Pied */
+.pied { background: var(--encre); color: #b9c0ca; padding: 44px 0 36px; text-align: center; font-size: .92rem; }
+.pied__nom { font-family: var(--titre); font-weight: 900; font-size: 1.6rem; color: #fff; margin-bottom: .2em; }
+.pied__petit { font-size: .78rem; opacity: .7; margin: 1.4em 0 0; }
+
+/* ===== Mobile ===== */
+@media (max-width: 900px) {
+  .ardoise__grille { grid-template-columns: repeat(2, 1fr); }
+  .jour, .jour:nth-child(n) { border-right: 0; border-bottom: 1px dashed rgba(241,238,230,.22); }
+  .jour:nth-child(odd) { border-right: 1px dashed rgba(241,238,230,.22); }
+  .jour:nth-last-child(-n+2) { border-bottom: 0; }
+}
+@media (max-width: 820px) {
+  .burger {
+    display: flex; flex-direction: column; justify-content: center; gap: 5px;
+    width: 44px; height: 44px; background: none; border: 0; cursor: pointer; padding: 10px;
+  }
+  .burger span { display: block; height: 2px; background: var(--encre); border-radius: 2px; transition: transform .2s, opacity .2s; }
+  .burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav {
+    position: absolute; top: 68px; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0;
+    background: var(--papier); border-bottom: 1px solid var(--papier-fonce); padding: 8px 16px 18px;
+    display: none;
+  }
+  .nav.ouvert { display: flex; }
+  .nav a:not(.btn) { padding: .8em 0; border-bottom: 1px solid var(--papier-fonce); }
+  .nav .btn { margin-top: 12px; text-align: center; }
+
+  .maison, .vendredi__inner, .infos__inner { grid-template-columns: 1fr; }
+  .maison__photo { max-width: 420px; }
+  .affiche { transform: none; }
+  .galerie { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; height: auto; }
+  .galerie__grand { grid-row: auto; grid-column: span 2; }
+  .galerie img { aspect-ratio: 4 / 3; }
+  .tampon { width: 112px; height: 112px; top: 20px; right: 16px; }
+  .tampon__prix { font-size: 1.9rem; }
+  .tampon__haut, .tampon__bas { font-size: .58rem; }
+}
+@media (max-width: 560px) {
+  .ardoise { border-width: 10px; }
+  .ardoise__grille { grid-template-columns: 1fr; }
+  .jour:nth-child(n) { border-right: 0; border-bottom: 1px dashed rgba(241,238,230,.22); }
+  .jour:last-child { border-bottom: 0; }
+  .hero { min-height: 560px; }
+  .hero__actions .btn { flex: 1 1 100%; text-align: center; }
+  .formule__contenu { font-size: .95rem; }
+  .carte, .carte iframe { min-height: 320px; }
+}
