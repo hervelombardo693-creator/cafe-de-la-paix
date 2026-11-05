@@ -42,8 +42,8 @@ const CAFE = {
   // Une affiche par événement, à mettre dans le dossier images/.
   // Elle disparaît toute seule du site le lendemain de sa date.
   evenements: [
-    { date: "2026-11-13", quand: "Vendredi 13 novembre", titre: "Soirée choucroute",                 image: "images/affiche-choucroute.jpg" },
-    { date: "2026-11-19", quand: "Jeudi 19 novembre",    titre: "Journée Beaujolais nouveau · 18 €", image: "images/affiche-beaujolais.jpg" }
+    { date: "2026-11-13", quand: "Vendredi 13 novembre", titre: "Soirée choucroute",                 image: "images/affiche-choucroute.webp" },
+    { date: "2026-11-19", quand: "Jeudi 19 novembre",    titre: "Journée Beaujolais nouveau · 18 €", image: "images/affiche-beaujolais.webp" }
   ],
 
   // --- Menu du week-end (vendredi soir et samedi midi) ---
