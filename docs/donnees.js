@@ -26,16 +26,25 @@ const CAFE = {
   // --- Menu de la semaine (du lundi au vendredi midi) ----
   // Dates au format AAAA-MM-JJ. Le jour en cours est mis en avant
   // automatiquement s'il fait partie de la semaine.
+  // Pas d'entrée un jour : laisser entree: "".
   semaine: {
-    titre: "Du lundi 19 au vendredi 23 octobre",
+    titre: "Du lundi 2 au vendredi 6 novembre",
     jours: [
-      { date: "2026-10-19", entree: "Œuf meurette",               plat: "Filet de volaille à l'estragon, linguine" },
-      { date: "2026-10-20", entree: "Tartine de chèvre au miel",  plat: "Sauté de canard aux olives, carottes" },
-      { date: "2026-10-21", entree: "Quiche du jour",             plat: "Joue de porc confite, purée maison" },
-      { date: "2026-10-22", entree: "Œuf mayonnaise",             plat: "Bœuf bourguignon, coquillettes" },
-      { date: "2026-10-23", entree: "Bouchée aux fruits de mer",  plat: "Filet de poisson aux trois agrumes" }
+      { date: "2026-11-02", entree: "Jambon – Macédoine",     plat: "Pluma de porc, moutarde à l'ancienne" },
+      { date: "2026-11-03", entree: "Foie gras",              plat: "Cuisses de poulet rôties, gratin dauphinois" },
+      { date: "2026-11-04", entree: "Salade piémontaise",     plat: "Canard à l'orange, tagliatelles" },
+      { date: "2026-11-05", entree: "Lasagnes",               plat: "Salade verte, jambon cru" },
+      { date: "2026-11-06", entree: "",                       plat: "Poisson du jour, sauce vierge, riz pilaf" }
     ]
   },
+
+  // --- À l'affiche : événements à venir ------------------
+  // Une affiche par événement, à mettre dans le dossier images/.
+  // Elle disparaît toute seule du site le lendemain de sa date.
+  evenements: [
+    { date: "2026-11-13", quand: "Vendredi 13 novembre", titre: "Soirée choucroute",                 image: "images/affiche-choucroute.jpg" },
+    { date: "2026-11-19", quand: "Jeudi 19 novembre",    titre: "Journée Beaujolais nouveau · 18 €", image: "images/affiche-beaujolais.jpg" }
+  ],
 
   // --- Menu du week-end (vendredi soir et samedi midi) ---
   weekend: {

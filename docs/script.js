@@ -51,23 +51,37 @@
     if (j.date === isoDuJour) carte.classList.add("jour--aujourdhui");
     carte.appendChild(el("h3", "jour__nom", JOURS[d.getDay()]));
     carte.appendChild(el("p", "jour__date", d.getDate() + " " + MOIS[d.getMonth()]));
-    carte.appendChild(plat("Entrée", j.entree));
+    if (j.entree) carte.appendChild(plat("Entrée", j.entree));
     carte.appendChild(plat("Plat", j.plat));
     grille.appendChild(carte);
   });
-  /* Samedi midi : renvoie vers le menu du week-end */
-  const sam = el("a", "jour jour--weekend");
-  sam.href = "#weekend";
-  const derniere = CAFE.semaine.jours[CAFE.semaine.jours.length - 1];
-  if (derniere) {
-    const d = new Date(derniere.date + "T12:00:00");
-    d.setDate(d.getDate() + 1);
-    if (d.getDay() === 6 && isoDuJour === d.toISOString().slice(0, 10)) sam.classList.add("jour--aujourdhui");
-  }
-  sam.appendChild(el("h3", "jour__nom", "Samedi"));
-  sam.appendChild(el("p", "jour__date", "Le midi"));
-  sam.appendChild(plat("Au menu", "Le menu du week-end ↓"));
-  grille.appendChild(sam);
+
+  /* À l'affiche : événements à venir, retirés une fois la date passée */
+  const section = $("#affiche"), lienAffiche = $("#nav-affiche");
+  const majAffiche = () => {
+    const vide = !$("#affiches").children.length;
+    section.hidden = vide;
+    lienAffiche.hidden = vide;
+  };
+  (CAFE.evenements || [])
+    .filter((e) => e.date >= isoDuJour)
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .forEach((e) => {
+      const a = el("a", "affiche-carte");
+      a.href = e.image;
+      a.target = "_blank";
+      a.rel = "noopener";
+      const img = el("img");
+      img.src = e.image;
+      img.alt = "Affiche : " + e.titre + ", " + e.quand;
+      img.loading = "lazy";
+      img.addEventListener("error", () => { a.remove(); majAffiche(); });
+      a.appendChild(img);
+      a.appendChild(el("span", "affiche-carte__quand", e.quand));
+      a.appendChild(el("span", "affiche-carte__titre", e.titre));
+      $("#affiches").appendChild(a);
+    });
+  majAffiche();
 
   /* Menu du week-end */
   $("#we-quand").textContent = CAFE.weekend.quand;
