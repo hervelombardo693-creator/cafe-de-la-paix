@@ -58,8 +58,9 @@
 
   /* À l'affiche : événements à venir, retirés une fois la date passée */
   const section = $("#affiche"), lienAffiche = $("#nav-affiche");
+  /* La section ne s'affiche qu'une fois au moins une affiche chargée */
   const majAffiche = () => {
-    const vide = !$("#affiches").children.length;
+    const vide = !$("#affiches").querySelector(".affiche-carte:not([hidden])");
     section.hidden = vide;
     lienAffiche.hidden = vide;
   };
@@ -68,14 +69,15 @@
     .sort((a, b) => a.date.localeCompare(b.date))
     .forEach((e) => {
       const a = el("a", "affiche-carte");
+      a.hidden = true;
       a.href = e.image;
       a.target = "_blank";
       a.rel = "noopener";
       const img = el("img");
       img.src = e.image;
       img.alt = "Affiche : " + e.titre + ", " + e.quand;
-      img.loading = "lazy";
-      img.addEventListener("error", () => { a.remove(); majAffiche(); });
+      img.addEventListener("load", () => { a.hidden = false; majAffiche(); });
+      img.addEventListener("error", () => a.remove());
       a.appendChild(img);
       a.appendChild(el("span", "affiche-carte__quand", e.quand));
       a.appendChild(el("span", "affiche-carte__titre", e.titre));
