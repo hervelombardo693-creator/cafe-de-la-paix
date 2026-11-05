@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Affichette QR code — Café de la Paix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Great+Vibes&family=Work+Sans:wght@500;600&display=swap" rel="stylesheet">
+  <style id="taille-page">@page { size: 105mm 148mm; margin: 0; }</style>
+  <style>
+    /* Affichette A6 : ?planche=1 met 4 affichettes sur une feuille A4 à découper */
+    :root {
+      --vert: #1e3a2b; --creme: #f6efe1; --or: #b8935a; --or-clair: #d9bd8a;
+      --titre: "Cormorant Garamond", Georgia, serif; --script: "Great Vibes", cursive; --corps: "Work Sans", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #d9d4c8; font-family: var(--corps); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .feuille { display: flex; flex-wrap: wrap; gap: 10mm; justify-content: center; padding: 10mm; }
+    body.planche .feuille { width: 210mm; height: 297mm; gap: 0; padding: 0; background: #fff; }
+    .carte {
+      width: 105mm; height: 148mm; position: relative; overflow: hidden;
+      background: var(--vert); color: var(--creme); text-align: center;
+      display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+      padding: 12mm 9mm 9mm;
+    }
+    body.planche .carte { outline: .2mm dashed #bbb; }
+    .carte::before, .carte::after { content: ""; position: absolute; pointer-events: none; }
+    .carte::before { inset: 4mm; border: .6mm solid var(--or); }
+    .carte::after { inset: 5.6mm; border: .2mm solid var(--or); }
+    .feston { position: absolute; top: 0; left: 0; right: 0; height: 4mm;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='20'%3E%3Ccircle cx='20' cy='0' r='20' fill='%23f6efe1'/%3E%3C/svg%3E") 0 0 / 8mm 4mm repeat-x; }
+    .marque { font-family: var(--script); font-size: 15mm; line-height: 1; margin: 0; color: var(--creme); }
+    .lieu { font-size: 2.3mm; letter-spacing: .22em; text-transform: uppercase; color: var(--or-clair); margin: 1mm 0 0; }
+    .appel { font-family: var(--titre); font-weight: 700; font-size: 7mm; line-height: 1.05; margin: 0; }
+    .appel em { display: block; font-family: var(--titre); font-style: italic; font-weight: 600; font-size: 4.4mm; color: var(--or-clair); margin-top: 1mm; }
+    .qr { width: 58mm; height: 58mm; padding: 2mm; background: var(--creme); border: .6mm solid var(--or); border-radius: 3mm; }
+    .qr img { width: 100%; height: 100%; display: block; }
+    .details { font-size: 2.5mm; line-height: 1.6; letter-spacing: .1em; text-transform: uppercase; color: rgba(246,239,225,.85); margin: 0; }
+    .details b { color: var(--or-clair); font-weight: 600; }
+    @media print { body { background: none; } .feuille { padding: 0; gap: 0; } }
+  </style>
+</head>
+<body>
+  <div class="feuille" id="feuille">
+    <div class="carte">
+      <div class="feston"></div>
+      <div>
+        <p class="marque">Café de la Paix</p>
+        <p class="lieu">Bellerive-sur-Allier</p>
+      </div>
+      <p class="appel">Scannez-moi !<em>menu de la semaine, soirées et horaires</em></p>
+      <div class="qr"><img src="qr-code-site-cafe-de-la-paix.png" alt="QR code vers le site du Café de la Paix"></div>
+      <p class="details">Ouvert le midi du lundi au samedi<br><b>et le vendredi soir</b></p>
+    </div>
+  </div>
+  <script>
+    if (new URLSearchParams(location.search).get("planche")) {
+      document.body.classList.add("planche");
+      document.getElementById("taille-page").textContent = "@page { size: A4; margin: 0; }";
+      const feuille = document.getElementById("feuille");
+      const carte = feuille.querySelector(".carte");
+      for (let i = 0; i < 3; i++) feuille.appendChild(carte.cloneNode(true));
+    }
+  </script>
+</body>
+</html>
