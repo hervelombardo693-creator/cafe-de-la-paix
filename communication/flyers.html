@@ -39,7 +39,14 @@
     input:focus, textarea:focus, select:focus { outline: 2px solid var(--or); outline-offset: 1px; border-color: var(--or); }
     .champ { margin-bottom: 12px; }
     .deux { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .modeles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .modeles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
+    .modeles span { font-size: .72rem; }
+    .m-photo::before { background: linear-gradient(to bottom, var(--ardoise) 45%, #a8682f 46%, #e0ae62); }
+    .m-menu::before { background: linear-gradient(to bottom, var(--vert) 45%, #a8682f 46%, #e0ae62); }
+    #form:not(.mode-photo) .si-photo, #form:not(.mode-panneau) .si-panneau, #form:not(.mode-menu) .si-menu, #form.mode-panneau .hors-photo { display: none; }
+    .reglage { margin-bottom: 10px; }
+    input[type=range] { width: 100%; accent-color: var(--vert); }
+    input[type=file] { font-size: .8rem; max-width: 100%; }
     .modeles label { margin: 0; cursor: pointer; }
     .modeles input { position: absolute; opacity: 0; }
     .modeles span {
@@ -81,8 +88,9 @@
     .planche[data-format="a4"]    { --w: 794px;  --h: 1123px; }
     .planche[data-format="carre"] { --w: 1080px; --h: 1080px; }
     .planche[data-format="story"] { --w: 1080px; --h: 1920px; }
+    .planche[data-format="portrait"] { --w: 1080px; --h: 1350px; }
 
-    .cadre { position: absolute; pointer-events: none; }
+    .cadre { position: absolute; pointer-events: none; z-index: 3; }
     .cadre--1 { inset: 3.4cqmin; border: .5cqmin solid var(--or); }
     .cadre--2 { inset: 5cqmin; border: .18cqmin solid var(--or); }
     .feston {
@@ -159,6 +167,111 @@
     .planche[data-modele="creme"] .p-prix small { color: var(--or-clair); }
     .planche[data-modele="creme"] .p-pied { color: var(--vert); }
 
+    /* Modèle PHOTO — affiche avec photo du plat, ardoise suspendue et tampon prix */
+    .ph { display: none; }
+    .planche[data-fond="vert"]    { --fond: #1e3a2b; --fond0: rgba(30,58,43,0); --fondA: rgba(30,58,43,.94); }
+    .planche[data-fond="ardoise"] { --fond: #272d33; --fond0: rgba(39,45,51,0); --fondA: rgba(39,45,51,.94); }
+    .planche[data-modele="photo"] { --hphoto: 48%; background: var(--fond); color: var(--creme); }
+    .planche[data-modele="photo"] .ph { display: block; }
+    .ph-photo, .ph-fondu { position: absolute; left: 0; right: 0; bottom: 0; height: var(--hphoto); }
+    .ph-photo { background-repeat: no-repeat; background-color: var(--fond); }
+    .ph-fondu { background: linear-gradient(to bottom, var(--fond) 0%, var(--fond) 6%, var(--fond0) 48%); }
+    .planche[data-modele="photo"] .contenu { inset: 7.5cqmin 8cqmin auto; bottom: calc(var(--hphoto) * .8); justify-content: flex-start; gap: calc(var(--k) * 1.6cqw); }
+    .planche[data-modele="photo"] .p-logo { width: calc(var(--k) * 21cqw); }
+    .planche[data-modele="photo"] .p-date, .planche[data-modele="photo"] .p-prix, .planche[data-modele="photo"] .p-pied { display: none !important; }
+    .planche[data-modele="photo"] .p-accroche { color: var(--or-clair); font-size: calc(var(--k) * 10cqw); }
+    .planche[data-modele="photo"] .p-titre { font-size: calc(var(--k) * 13cqw); text-shadow: 0 .5cqw 2cqw rgba(0,0,0,.45); }
+    .planche[data-modele="photo"][data-titre="manuscrit"] .p-accroche { color: var(--creme); }
+    .planche[data-modele="photo"][data-titre="manuscrit"] .p-titre { font-family: var(--script); font-weight: 400; font-size: calc(var(--k) * 18cqw); line-height: .95; color: var(--or-clair); letter-spacing: 0; padding: 0 2cqw; }
+    .planche[data-modele="photo"] .p-liste strong { font-size: calc(var(--k) * 5.6cqw); text-shadow: 0 .3cqw 1.2cqw rgba(0,0,0,.5); }
+    .planche[data-modele="photo"] .p-liste em, .planche[data-modele="photo"] .p-texte { color: rgba(246,239,225,.88); }
+
+    .ph-panneau { position: absolute; right: 7cqw; width: 31cqw; transform-origin: top right; z-index: 2; }
+    .ph-corde { height: 7cqw; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 24' preserveAspectRatio='none'%3E%3Cpolyline points='14,24 50,3 86,24' fill='none' stroke='%23b8935a' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='3' r='2.6' fill='%23d9bd8a'/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
+    .ph-ardoise { position: relative; background: #2d343b; border: .6cqmin solid var(--or); border-radius: 3cqw; padding: 2.8cqw 2cqw 3cqw; text-align: center; box-shadow: 0 2cqw 4cqw rgba(0,0,0,.45); }
+    .ph-ardoise::after { content: ""; position: absolute; inset: 1.1cqw; border: .2cqmin solid rgba(184,147,90,.5); border-radius: 2cqw; }
+    .ph-l1, .ph-l2 { font-family: var(--titre); font-style: italic; font-weight: 600; font-size: 5.6cqw; line-height: 1.05; color: var(--creme); }
+    .ph-chiffre { font-family: var(--titre); font-weight: 700; font-size: 15cqw; line-height: .95; color: var(--or-clair); }
+    .ph-l3 { font-size: 2.3cqw; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--or-clair); margin-top: 1cqw; }
+
+    .planche[data-modele="photo"] .ph-prix {
+      position: absolute; left: 8cqw; width: 25cqw; height: 25cqw; border-radius: 50%; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+      background: var(--creme); color: var(--vert); border: .6cqmin solid var(--or);
+      transform-origin: bottom left; box-shadow: 0 1.5cqw 4cqw rgba(0,0,0,.45);
+    }
+    .ph-prix::after { content: ""; position: absolute; inset: 1.4cqw; border-radius: 50%; border: .2cqmin solid var(--or); }
+    .ph-prix strong { font-family: var(--titre); font-weight: 700; font-size: 9.5cqw; line-height: 1; }
+    .ph-prix small { font-size: 2.2cqw; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--or-fonce); max-width: 80%; line-height: 1.2; }
+
+    .ph-bande {
+      position: absolute; left: 0; right: 0; bottom: 0; z-index: 1;
+      background: var(--fondA); border-top: .4cqmin solid var(--or); color: var(--creme);
+      padding: 2.4cqw 9cqw 3.6cqw; text-align: center;
+      font-size: 2.5cqw; letter-spacing: .12em; text-transform: uppercase; line-height: 1.6;
+    }
+
+    /* Modèle MENU PHOTO — bandeau date, MENU, gros prix, plat, photo, encadré du bas */
+    .mn { display: none; }
+    .planche[data-modele="menu"] { --hphoto: 52%; background: var(--fond); color: var(--creme); }
+    .planche[data-modele="menu"] .ph-photo, .planche[data-modele="menu"] .ph-fondu, .planche[data-modele="menu"] .mn { display: block; }
+    .planche[data-modele="menu"] .ph-fondu { background: linear-gradient(to bottom, var(--fond) 0%, var(--fond) 8%, var(--fond0) 55%), linear-gradient(to top, var(--fond) 0%, var(--fond0) 26%); }
+    .planche[data-modele="menu"] .contenu { inset: 8cqmin 8cqmin auto; bottom: calc(var(--hphoto) * .72); justify-content: flex-start; gap: calc(var(--k) * 2cqw); }
+    .planche[data-modele="menu"] .p-logo, .planche[data-modele="menu"] .p-marque, .planche[data-modele="menu"] .p-pied { display: none !important; }
+    .planche[data-modele="menu"] .mn-entete { display: flex; order: 0; align-items: center; justify-content: center; gap: calc(var(--k) * 3.5cqw); }
+    .mn-entete img { width: calc(var(--k) * 25cqw); height: auto; border-radius: 50%; border: .55cqmin solid var(--or); }
+    .mn-marque { text-align: left; line-height: .9; }
+    .mn-marque span { display: block; }
+    .mn-cafe { font-family: var(--titre); font-style: italic; font-weight: 600; font-size: calc(var(--k) * 11cqw); }
+    .mn-dela { font-family: var(--titre); font-style: italic; font-size: calc(var(--k) * 5cqw); padding-left: 6cqw; margin: .15em 0 .25em; }
+    .mn-paix { font-family: var(--script); font-size: calc(var(--k) * 15cqw); line-height: .85; }
+    .planche[data-modele="menu"] .p-date {
+      order: 1; position: relative; width: 100%; background: var(--fondA); color: var(--creme);
+      font-style: normal; font-weight: 600; text-transform: uppercase; letter-spacing: .08em;
+      font-size: calc(var(--k) * 6.4cqw); padding: .3em .8em; border: .5cqmin solid var(--or); border-radius: .4cqw;
+    }
+    .planche[data-modele="menu"] .p-date::after { content: ""; position: absolute; inset: .9cqw; border: .2cqmin solid rgba(184,147,90,.7); }
+    .planche[data-modele="menu"] .p-accroche {
+      order: 3; display: flex; align-items: center; justify-content: center; gap: 3cqw; width: 100%; margin: 0 !important;
+      font-family: var(--titre); font-weight: 600; font-size: calc(var(--k) * 6cqw); letter-spacing: .35em; text-transform: uppercase; color: var(--creme);
+    }
+    .planche[data-modele="menu"] .p-accroche::before, .planche[data-modele="menu"] .p-accroche::after { content: ""; flex: 0 1 18cqw; height: .25cqmin; background: var(--or); }
+    .planche[data-modele="menu"] .p-prix { order: 4; width: auto; height: auto; border: 0; border-radius: 0; margin-top: calc(var(--k) * -2cqw) !important; }
+    .planche[data-modele="menu"] .p-prix::after { display: none; }
+    .planche[data-modele="menu"] .p-prix strong { font-size: calc(var(--k) * 22cqw); line-height: .9; color: var(--creme); text-shadow: 0 .5cqw 2cqw rgba(0,0,0,.4); }
+    .planche[data-modele="menu"] .p-prix small { font-size: calc(var(--k) * 2.6cqw); color: var(--or-clair); margin-top: 1cqw; }
+    .planche[data-modele="menu"] .mn-losange { display: flex; order: 5; align-items: center; justify-content: center; gap: 2cqw; width: 100%; color: var(--or); font-size: calc(var(--k) * 2.6cqw); line-height: 1; }
+    .mn-losange i { flex: 0 1 24cqw; height: .25cqmin; background: var(--or); }
+    .planche[data-modele="menu"] .p-titre { order: 6; font-weight: 600; font-size: calc(var(--k) * 10cqw); line-height: 1; text-shadow: 0 .5cqw 2cqw rgba(0,0,0,.5); }
+    .planche[data-modele="menu"] .p-liste { order: 7; margin-top: calc(var(--k) * -1.2cqw) !important; }
+    .planche[data-modele="menu"] .p-liste li + li::before { display: none; }
+    .planche[data-modele="menu"] .p-liste strong, .planche[data-modele="menu"] .p-liste em { display: inline; font-style: italic; font-weight: 500; font-size: calc(var(--k) * 5.6cqw); text-shadow: 0 .3cqw 1.4cqw rgba(0,0,0,.6); }
+    .planche[data-modele="menu"] .p-liste li:first-child strong { font-size: calc(var(--k) * 7cqw); }
+    .planche[data-modele="menu"] .p-liste em::before { content: " · "; }
+    .planche[data-modele="menu"] .p-texte { order: 2; font-family: var(--script); font-size: calc(var(--k) * 8cqw); line-height: 1; color: var(--or-clair); max-width: none; }
+
+    .mn-bas { position: absolute; left: 0; right: 0; bottom: 7.5cqmin; z-index: 2; text-align: center; }
+    .planche[data-modele="menu"] .mn-bas { display: flex; flex-direction: column; align-items: center; gap: 2.2cqw; }
+    .mn-encadre {
+      position: relative; max-width: 80cqw; min-width: 52cqw; padding: 3.4cqw 6cqw 3cqw;
+      background: var(--fondA); border: .55cqmin solid var(--or); box-shadow: 0 1.5cqw 4cqw rgba(0,0,0,.45);
+    }
+    .mn-encadre::after { content: ""; position: absolute; inset: 1cqw; border: .2cqmin solid rgba(184,147,90,.7); pointer-events: none; }
+    .mn-cloche {
+      position: absolute; top: -6.4cqw; left: 50%; width: 15cqw; height: 6.4cqw; margin-left: -7.5cqw;
+      background: var(--fond) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 34'%3E%3Ccircle cx='30' cy='6' r='2.6' fill='%23d9bd8a'/%3E%3Cpath d='M9 27 A21 21 0 0 1 51 27 Z' fill='%23d9bd8a'/%3E%3Crect x='5' y='27' width='50' height='3.2' rx='1.6' fill='%23b8935a'/%3E%3C/svg%3E") center 70% / 62% auto no-repeat;
+      border: .55cqmin solid var(--or); border-bottom: 0; border-radius: 7.5cqw 7.5cqw 0 0;
+    }
+    .mn-e1 { font-family: var(--titre); font-weight: 600; font-size: 4.6cqw; letter-spacing: .32em; text-transform: uppercase; line-height: 1.1; padding-left: .32em; }
+    .mn-e2--long { font-size: 6cqw !important; }
+    .mn-e2 { font-family: var(--titre); font-weight: 700; font-size: 8.4cqw; letter-spacing: .1em; text-transform: uppercase; line-height: 1.05; color: var(--creme); }
+    .mn-pied { font-size: 2.2cqw; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5; color: rgba(246,239,225,.85); text-shadow: 0 .2cqw 1cqw rgba(0,0,0,.8); }
+    .mn-orn { position: absolute; width: 17cqw; height: 17cqw; z-index: 3; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%23b8935a' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M6 94 C 22 78 36 56 46 34 C 52 22 62 12 80 8'/%3E%3Cpath d='M14 90 C 34 84 52 72 64 56'/%3E%3C/g%3E%3Cg fill='%23b8935a'%3E%3Cpath d='M30 66 C 20 58 20 44 30 36 C 36 46 36 58 30 66 Z'/%3E%3Cpath d='M46 40 C 40 28 44 16 56 12 C 58 24 54 34 46 40 Z'/%3E%3Cpath d='M64 56 C 70 46 82 42 92 46 C 86 56 76 60 64 56 Z'/%3E%3Ccircle cx='82' cy='8' r='2.6'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat; }
+    .mn-orn--bg { left: 5.6cqmin; bottom: 5.6cqmin; }
+    .mn-orn--bd { right: 5.6cqmin; bottom: 5.6cqmin; transform: scaleX(-1); }
+    .mn-orn--hg { left: 5.6cqmin; top: 5.6cqmin; transform: scaleY(-1); }
+    .mn-orn--hd { right: 5.6cqmin; top: 5.6cqmin; transform: scale(-1, -1); }
+
     /* Impression : seule la planche, à sa taille réelle */
     @media print {
       body { background: none; }
@@ -203,6 +316,8 @@
         <label><input type="radio" name="modele" value="vert" checked><span class="m-vert">Vert<br><small>soirées</small></span></label>
         <label><input type="radio" name="modele" value="ardoise"><span class="m-ardoise">Ardoise<br><small>menus</small></span></label>
         <label><input type="radio" name="modele" value="creme"><span class="m-creme">Crème<br><small>fêtes, infos</small></span></label>
+        <label><input type="radio" name="modele" value="photo"><span class="m-photo">Photo<br><small>ardoise</small></span></label>
+        <label><input type="radio" name="modele" value="menu"><span class="m-menu">Menu<br><small>photo</small></span></label>
       </div>
     </fieldset>
 
@@ -211,14 +326,58 @@
       <select id="format" name="format">
         <option value="a5">Flyer A5 (14,8 × 21 cm)</option>
         <option value="a4">Affiche A4 (21 × 29,7 cm)</option>
+        <option value="portrait">Post Facebook / Instagram (portrait 4:5)</option>
         <option value="carre">Post Facebook / Instagram (carré)</option>
         <option value="story">Story Facebook / Instagram</option>
       </select>
     </div>
 
+    <fieldset class="si-photo">
+      <legend>Photo du plat</legend>
+      <div class="champ">
+        <select id="photoEx" name="photoEx" aria-label="Photo du plat">
+          <option value="choucroute">Choucroute</option>
+          <option value="saucisson">Saucisson brioché</option>
+          <option value="grenouilles">Cuisses de grenouille</option>
+          <option value="gratin">Gratin maison</option>
+          <option value="perso">Ma photo</option>
+        </select>
+      </div>
+      <div class="champ"><label for="photoFichier">Ou une photo de l'ordinateur / du téléphone</label><input type="file" id="photoFichier" accept="image/*"></div>
+      <div class="deux">
+        <div class="reglage"><label for="hphoto">Hauteur de la photo</label><input type="range" id="hphoto" name="hphoto" min="35" max="65" value="48"></div>
+        <div class="reglage"><label for="zoom">Zoom</label><input type="range" id="zoom" name="zoom" min="100" max="220" value="100"></div>
+      </div>
+      <div class="reglage"><label for="py">Cadrage <small>(monter ↔ descendre)</small></label><input type="range" id="py" name="py" min="0" max="100" value="50"></div>
+      <div class="deux">
+        <div class="champ"><label for="fond">Fond</label><select id="fond" name="fond"><option value="ardoise">Ardoise</option><option value="vert">Vert bouteille</option></select></div>
+        <div class="champ"><label>&nbsp;</label><label class="case"><input type="checkbox" id="manuscrit" name="manuscrit"> Titre manuscrit</label></div>
+      </div>
+    </fieldset>
+
+    <fieldset class="si-menu">
+      <legend>Encadré du bas <small>(vide = sans)</small></legend>
+      <div class="deux">
+        <div class="champ"><input type="text" id="e1" name="e1" placeholder="Dessert" aria-label="Petite ligne de l'encadré"></div>
+        <div class="champ"><input type="text" id="e2" name="e2" placeholder="Surprise" aria-label="Grande ligne de l'encadré"></div>
+      </div>
+    </fieldset>
+
+    <fieldset class="si-panneau">
+      <legend>Ardoise suspendue <small>(la date — vide = sans)</small></legend>
+      <div class="deux">
+        <div class="champ"><input type="text" id="p1" name="p1" placeholder="Vendredi" aria-label="Ligne du haut"></div>
+        <div class="champ"><input type="text" id="p2" name="p2" placeholder="13" aria-label="Grand chiffre"></div>
+      </div>
+      <div class="deux">
+        <div class="champ"><input type="text" id="p3" name="p3" placeholder="novembre" aria-label="Ligne du bas"></div>
+        <div class="champ"><input type="text" id="p4" name="p4" placeholder="19 h" aria-label="Petite ligne"></div>
+      </div>
+    </fieldset>
+
     <div class="champ"><label for="accroche">Accroche <small>(écriture manuscrite, 1 à 3 mots)</small></label><input type="text" id="accroche" name="accroche"></div>
     <div class="champ"><label for="titre">Titre</label><input type="text" id="titre" name="titre"></div>
-    <div class="champ"><label for="date">Date et heure <small>(dans le cartouche)</small></label><input type="text" id="date" name="date"></div>
+    <div class="champ hors-photo"><label for="date">Date et heure <small>(dans le cartouche)</small></label><input type="text" id="date" name="date"></div>
     <div class="champ">
       <label for="liste">Liste <small>(une ligne par élément)</small></label>
       <textarea id="liste" name="liste" rows="4"></textarea>
@@ -241,11 +400,22 @@
     </div>
     <div class="apercu" id="apercu">
       <div class="scene" id="scene">
-        <div class="planche" id="planche" data-modele="vert" data-format="a5">
+        <div class="planche" id="planche" data-modele="vert" data-format="a5" data-fond="ardoise">
+          <div class="ph ph-photo" id="ph-photo"></div>
+          <div class="ph ph-fondu"></div>
           <div class="feston"></div>
           <div class="cadre cadre--1"></div>
           <div class="cadre cadre--2"></div>
+          <div class="mn mn-orn mn-orn--hg"></div>
+          <div class="mn mn-orn mn-orn--hd"></div>
+          <div class="mn mn-orn mn-orn--bg"></div>
+          <div class="mn mn-orn mn-orn--bd"></div>
           <div class="contenu" id="contenu">
+            <div class="mn mn-entete">
+              <img id="mn-logo" alt="Logo du Café de la Paix">
+              <p class="mn-marque"><span class="mn-cafe">Café</span><span class="mn-dela">de la</span><span class="mn-paix">Paix</span></p>
+            </div>
+            <div class="mn mn-losange" aria-hidden="true"><i></i>◆<i></i></div>
             <img class="p-logo" id="p-logo" alt="Café de la Paix">
             <p class="p-marque">Café de la Paix</p>
             <p class="p-accroche" id="p-accroche"></p>
@@ -256,6 +426,25 @@
             <div class="p-prix" id="p-prix"><strong></strong><small></small></div>
             <p class="p-pied" id="p-pied"></p>
           </div>
+          <div class="ph ph-panneau" id="ph-panneau">
+            <div class="ph-corde"></div>
+            <div class="ph-ardoise">
+              <div class="ph-l1" id="ph-l1"></div>
+              <div class="ph-chiffre" id="ph-chiffre"></div>
+              <div class="ph-l2" id="ph-l2"></div>
+              <div class="ph-l3" id="ph-l3"></div>
+            </div>
+          </div>
+          <div class="ph ph-prix" id="ph-prix"><strong></strong><small></small></div>
+          <div class="ph ph-bande" id="ph-bande"></div>
+          <div class="mn mn-bas" id="mn-bas">
+            <div class="mn-encadre" id="mn-encadre">
+              <div class="mn-cloche"></div>
+              <div class="mn-e1" id="mn-e1"></div>
+              <div class="mn-e2" id="mn-e2"></div>
+            </div>
+            <div class="mn-pied" id="mn-pied"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -264,6 +453,7 @@
 
 <script src="../docs/donnees.js"></script>
 <script src="logos.js"></script>
+<script src="photos.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 (function () {
@@ -278,23 +468,66 @@
   const formats = {
     a5:    { nom: "Flyer A5", page: "148mm 210mm", export: 1748 },
     a4:    { nom: "Affiche A4", page: "210mm 297mm", export: 2480 },
+    portrait: { nom: "Post portrait 1080 × 1350", page: "1080px 1350px", export: 1080 },
     carre: { nom: "Post carré 1080 × 1080", page: "1080px 1080px", export: 1080 },
     story: { nom: "Story 1080 × 1920", page: "1080px 1920px", export: 1080 }
   };
 
   const we = C.weekend || { quand: "", plats: [] };
   const exemples = {
+    "menu-grenouilles": {
+      nom: "Menu photo · Cuisses de grenouille", modele: "menu", format: "a4",
+      accroche: "Menu", titre: "Cuisses de grenouille", date: "Vendredi 30 octobre",
+      liste: "persillées\nPommes de terre sautées", texte: "",
+      prix: "25 €", mention: "", alcool: false,
+      photoEx: "grenouilles", fond: "vert", e1: "Dessert", e2: "Surprise", hphoto: 47, py: 40
+    },
+    "menu-beaujolais": {
+      nom: "Menu photo · Beaujolais nouveau", modele: "menu", format: "a4",
+      accroche: "Menu", titre: "Saucisson brioché", date: "Jeudi 19 novembre",
+      liste: "sauce vin rouge\nSalade lyonnaise en entrée", texte: "Journée Beaujolais nouveau",
+      prix: "18 €", mention: "", alcool: true,
+      photoEx: "saucisson", fond: "vert", e1: "Dessert", e2: "Crème brûlée vanille", hphoto: 50, py: 35
+    },
+    "menu-choucroute": {
+      nom: "Menu photo · Soirée choucroute", modele: "menu", format: "a4",
+      accroche: "Soirée", titre: "Choucroute", date: "Vendredi 13 novembre",
+      liste: "", texte: "",
+      prix: "", mention: "", alcool: false,
+      photoEx: "choucroute", fond: "ardoise", e1: "", e2: "", hphoto: 54, py: 45
+    },
+    "photo-choucroute": {
+      nom: "Affiche photo · Soirée choucroute", modele: "photo", format: "portrait",
+      accroche: "Soirée", titre: "Choucroute", date: "",
+      liste: "", texte: "",
+      prix: "", mention: "", alcool: false,
+      photoEx: "choucroute", fond: "ardoise", manuscrit: true, p1: "Vendredi", p2: "13", p3: "novembre", p4: "", hphoto: 46, py: 45
+    },
+    "photo-beaujolais": {
+      nom: "Affiche photo · Beaujolais nouveau", modele: "photo", format: "a4",
+      accroche: "Journée", titre: "Beaujolais nouveau", date: "",
+      liste: "Salade lyonnaise\nSaucisson brioché | sauce vin rouge\nCrème brûlée vanille", texte: "",
+      prix: "18 €", mention: "le menu", alcool: true,
+      photoEx: "saucisson", fond: "vert", manuscrit: true, p1: "Jeudi", p2: "19", p3: "novembre", p4: "", hphoto: 44, py: 35
+    },
+    "photo-grenouilles": {
+      nom: "Affiche photo · Menu grenouilles", modele: "photo", format: "a4",
+      accroche: "le menu", titre: "Cuisses de grenouille", date: "",
+      liste: "Persillées | pommes de terre sautées\nDessert surprise", texte: "",
+      prix: "25 €", mention: "le menu", alcool: false,
+      photoEx: "grenouilles", fond: "ardoise", manuscrit: false, p1: "Vendredi", p2: "30", p3: "octobre", p4: "", hphoto: 46, py: 50
+    },
     "soiree": {
       nom: "Soirée à thème (vert)", modele: "vert", format: "a5",
-      accroche: "Soirée", titre: "Moules-frites", date: "Vendredi 13 novembre · 19 h",
-      liste: "Moules marinières | Frites maison\nDessert du jour", texte: "Une soirée conviviale pour finir la semaine.\nPlaces limitées, pensez à réserver.",
+      accroche: "Soirée", titre: "Choucroute", date: "Vendredi 13 novembre",
+      liste: "", texte: "Une soirée conviviale pour finir la semaine.\nPlaces limitées, pensez à réserver.",
       prix: "", mention: "", alcool: false
     },
     "beaujolais": {
       nom: "Beaujolais nouveau (ardoise)", modele: "ardoise", format: "carre",
-      accroche: "il est arrivé !", titre: "Le Beaujolais nouveau", date: "Jeudi 19 novembre · le midi",
-      liste: "Planche de charcuterie | à partager\nLe Beaujolais nouveau | au verre ou en pichet", texte: "",
-      prix: "", mention: "", alcool: true
+      accroche: "journée", titre: "Beaujolais nouveau", date: "Jeudi 19 novembre",
+      liste: "Salade lyonnaise\nSaucisson brioché | sauce vin rouge\nCrème brûlée vanille", texte: "",
+      prix: "18 €", mention: "le menu", alcool: true
     },
     "weekend": {
       nom: "Menu du week-end (crème)", modele: "creme", format: "a4",
@@ -327,6 +560,13 @@
     form.format.value = e.format;
     ["accroche", "titre", "date", "liste", "texte", "prix", "mention"].forEach((k) => (form[k].value = e[k]));
     form.alcool.checked = e.alcool;
+    if (e.modele === "photo" || e.modele === "menu") {
+      ["p1", "p2", "p3", "p4", "e1", "e2", "fond", "photoEx"].forEach((k) => { if (e[k] != null) form[k].value = e[k]; });
+      form.manuscrit.checked = !!e.manuscrit;
+      form.hphoto.value = e.hphoto || 48;
+      form.py.value = e.py != null ? e.py : 50;
+      form.zoom.value = 100;
+    }
     if (!form.pied.value) form.pied.value = piedDefaut;
     rendre();
   }
@@ -364,25 +604,109 @@
     prix.querySelector("small").textContent = v.mention;
     prix.hidden = !v.prix.trim();
 
-    const pied = $("p-pied");
-    pied.textContent = "";
-    v.pied.split("\n").filter((l) => l.trim()).forEach((l, i) => {
-      if (i) pied.appendChild(document.createElement("br"));
-      pied.appendChild(document.createTextNode(l));
+    [$("p-pied"), $("ph-bande"), $("mn-pied")].forEach((pied) => {
+      pied.textContent = "";
+      v.pied.split("\n").filter((l) => l.trim()).forEach((l, i) => {
+        if (i) pied.appendChild(document.createElement("br"));
+        pied.appendChild(document.createTextNode(l));
+      });
+      if (form.alcool.checked) {
+        const a = document.createElement("span");
+        a.className = "p-alcool";
+        a.textContent = "L'abus d'alcool est dangereux pour la santé, à consommer avec modération.";
+        pied.appendChild(a);
+      }
+      pied.hidden = !pied.textContent.trim();
     });
-    if (form.alcool.checked) {
-      const a = document.createElement("span");
-      a.className = "p-alcool";
-      a.textContent = "L'abus d'alcool est dangereux pour la santé, à consommer avec modération.";
-      pied.appendChild(a);
-    }
-    pied.hidden = !pied.textContent.trim();
+
+    /* Modèles photo et menu photo */
+    const photo = v.modele === "photo" || v.modele === "menu";
+    form.classList.toggle("mode-photo", photo);
+    form.classList.toggle("mode-panneau", v.modele === "photo");
+    form.classList.toggle("mode-menu", v.modele === "menu");
+    $("mn-logo").src = LOGOS.chef;
+    texteOuCacher($("mn-e1"), v.e1);
+    texteOuCacher($("mn-e2"), v.e2);
+    $("mn-encadre").hidden = !(v.e1 + v.e2).trim();
+    $("mn-e2").classList.toggle("mn-e2--long", v.e2.trim().length > 12);
+    planche.dataset.fond = v.fond;
+    planche.dataset.titre = form.manuscrit.checked ? "manuscrit" : "classique";
+    planche.style.setProperty("--hphoto", v.hphoto + "%");
+    texteOuCacher($("ph-l1"), v.p1);
+    texteOuCacher($("ph-chiffre"), v.p2);
+    texteOuCacher($("ph-l2"), v.p3);
+    texteOuCacher($("ph-l3"), v.p4);
+    $("ph-panneau").hidden = !(v.p1 + v.p2 + v.p3 + v.p4).trim();
+    const phPrix = $("ph-prix");
+    phPrix.querySelector("strong").textContent = v.prix;
+    phPrix.querySelector("small").textContent = v.mention;
+    phPrix.hidden = !v.prix.trim();
 
     $("taille-page").textContent = "@page { size: " + formats[v.format].page + "; margin: 0; }";
+    /* Menu photo : le texte s'arrête au-dessus de l'encadré du bas */
+    contenu.style.bottom = "";
+    if (v.modele === "menu") {
+      const W = planche.offsetWidth, H = planche.offsetHeight;
+      const reserve = $("mn-bas").offsetHeight + W * (0.075 + 0.02) + Math.min(W, H) * 0.075;
+      contenu.style.bottom = Math.max(H * v.hphoto / 100 * 0.72, reserve) + "px";
+    }
     ajuster();
+    if (photo) placerPhoto(v);
     echelle();
     $("info").textContent = formats[v.format].nom;
   }
+
+  /* Photo : remplit sa zone comme un « cover », avec zoom et cadrage */
+  let photoPerso = "";
+  const tailles = {};
+  function srcPhoto(v) {
+    if (v.photoEx === "perso" && photoPerso) return photoPerso;
+    return PHOTOS[v.photoEx] || PHOTOS.gratin;
+  }
+  function placerPhoto(v) {
+    const src = srcPhoto(v);
+    const zone = $("ph-photo");
+    const appliquer = () => {
+      const [iw, ih] = tailles[src];
+      const w = zone.offsetWidth, h = zone.offsetHeight;
+      const s = Math.max(w / iw, h / ih) * (v.zoom / 100);
+      const bw = iw * s, bh = ih * s;
+      zone.style.backgroundImage = "url(" + src + ")";
+      zone.style.backgroundSize = bw + "px " + bh + "px";
+      zone.style.backgroundPosition = (w - bw) / 2 + "px " + (h - bh) * (v.py / 100) + "px";
+    };
+    if (tailles[src]) appliquer();
+    else {
+      const img = new Image();
+      img.onload = () => { tailles[src] = [img.naturalWidth, img.naturalHeight]; appliquer(); };
+      img.src = src;
+    }
+    if (v.modele !== "photo") return;
+
+    /* Ardoise et tampon posés sur la photo, réduits s'il manque de place */
+    const W = planche.offsetWidth, H = planche.offsetHeight;
+    const bande = $("ph-bande");
+    const basLibre = H - (bande.hidden ? 0 : bande.offsetHeight) - W * 0.035;
+    let finTexte = 0;
+    [...contenu.children].forEach((c) => { if (c.offsetHeight) finTexte = Math.max(finTexte, c.offsetTop + c.offsetHeight); });
+    const haut = Math.min(contenu.offsetTop + finTexte + W * 0.02, H - (H * v.hphoto / 100) * 0.8);
+    const panneau = $("ph-panneau");
+    panneau.style.top = haut + "px";
+    const kp = Math.max(0.5, Math.min(1, (basLibre - haut) / panneau.offsetHeight));
+    panneau.style.transform = "rotate(4deg) scale(" + kp.toFixed(2) + ")";
+    const prix = $("ph-prix");
+    prix.style.bottom = (H - basLibre) + "px";
+    const kprix = Math.max(0.55, Math.min(1, (basLibre - haut) / prix.offsetHeight));
+    prix.style.transform = "rotate(-8deg) scale(" + kprix.toFixed(2) + ")";
+  }
+
+  $("photoFichier").addEventListener("change", (e) => {
+    const f = e.target.files[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = () => { photoPerso = r.result; form.photoEx.value = "perso"; form.zoom.value = 100; form.py.value = 50; rendre(); };
+    r.readAsDataURL(f);
+  });
 
   /* Réduit le contenu tant qu'il déborde de la planche */
   function ajuster() {
@@ -441,10 +765,10 @@
   const params = new URLSearchParams(location.search);
   if (params.get("export")) document.body.classList.add("export");
   form.pied.value = piedDefaut;
-  charger(params.get("exemple") || "soiree");
+  charger(params.get("exemple") || "menu-grenouilles");
   if (params.get("modele")) form.modele.value = params.get("modele");
   if (params.get("format")) form.format.value = params.get("format");
-  sel.value = params.get("exemple") || "soiree";
+  sel.value = params.get("exemple") || "menu-grenouilles";
   rendre();
   document.fonts.ready.then(rendre);
 })();

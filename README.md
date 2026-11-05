@@ -29,9 +29,10 @@ puis aller sur http://localhost:8731
 Le dossier `communication/` n'est pas publié sur le site.
 
 - `charte-graphique.pdf` (et `.html`) — les règles de l'identité : logos, couleurs, polices, éléments signature, formats
-- `flyers.html` — **l'atelier flyers** : ouvrir dans un navigateur, choisir un modèle (vert, ardoise, crème) et un format (A5, A4, post carré, story), remplir les textes, puis « Imprimer / PDF » ou « Télécharger l'image ». Le téléphone est repris de `docs/donnees.js`. Une connexion internet est nécessaire pour les polices et l'export en image.
-- `exemples/` — flyers prêts à l'emploi et aperçus
-- `logos.js` — les logos intégrés pour l'export en image (ne pas modifier)
+- `flyers.html` — **l'atelier flyers** : ouvrir dans un navigateur, choisir un modèle (vert, ardoise, crème, photo et ardoise, menu photo) et un format (A5, A4, post portrait, post carré, story), remplir les textes, choisir la photo du plat (ou en charger une depuis l'ordinateur ou le téléphone), puis « Imprimer / PDF » ou « Télécharger l'image ». Le téléphone est repris de `docs/donnees.js`. Une connexion internet est nécessaire pour les polices et l'export en image.
+- `exemples/` — flyers et affiches prêts à l'emploi, et aperçus
+- `photos/` — photos de plats d'exemple
+- `logos.js`, `photos.js` — logos et photos intégrés pour l'export en image (ne pas modifier)
 
 ## À compléter
 
