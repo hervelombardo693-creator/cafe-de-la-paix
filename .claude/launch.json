@@ -6,6 +6,12 @@
       "runtimeExecutable": "python",
       "runtimeArgs": ["-m", "http.server", "8731", "--directory", "docs"],
       "port": 8731
+    },
+    {
+      "name": "communication",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8732"],
+      "port": 8732
     }
   ]
 }

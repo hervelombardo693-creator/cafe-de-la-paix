@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Charte graphique — Café de la Paix</title>
+  <link rel="icon" type="image/png" href="../docs/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Great+Vibes&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    @page { size: A4; margin: 14mm 14mm 16mm; }
+    :root {
+      --vert: #1e3a2b; --vert-nuit: #142a1f;
+      --creme: #f6efe1; --creme-fonce: #ebe1cb; --blanc-casse: #fbf8f1;
+      --or: #b8935a; --or-fonce: #8a6a33; --or-clair: #d9bd8a;
+      --ardoise: #272d33; --encre: #1b2a22; --texte: #3b4038;
+      --titre: "Cormorant Garamond", Garamond, Georgia, serif;
+      --corps: "Work Sans", system-ui, sans-serif;
+      --script: "Great Vibes", "Brush Script MT", cursive;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--creme); color: var(--texte); font: 400 15px/1.6 var(--corps); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    img { display: block; max-width: 100%; }
+    h1, h2, h3 { font-family: var(--titre); color: var(--encre); line-height: 1.05; margin: 0 0 .4em; }
+    h2 { font-size: 2.5rem; font-weight: 700; }
+    h3 { font-size: 1.35rem; font-weight: 700; margin-top: 1.2em; }
+    p { margin: 0 0 .9em; }
+    .page { width: min(1000px, 100% - 32px); margin: 0 auto; padding: 56px 0; border-bottom: 1px solid var(--creme-fonce); }
+    .num { font-family: var(--script); color: var(--or-fonce); font-size: 2rem; line-height: 1; margin: 0; }
+    .intro { font-size: 1.05rem; max-width: 46em; }
+    .grille-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .grille-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .carte { background: var(--blanc-casse); border: 1px solid var(--creme-fonce); border-radius: 10px; padding: 20px; }
+    .legende { font-size: .82rem; color: #6f6f63; margin-top: .6em; }
+    .ok, .non { font-weight: 600; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; }
+    .ok { color: #2f7a45; } .non { color: #a8402f; }
+    ul.regles { padding-left: 1.1em; margin: 0; } ul.regles li { margin-bottom: .35em; }
+
+    /* Couverture */
+    .couverture { min-height: 92vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: var(--vert); color: var(--creme); position: relative; padding: 60px 20px; }
+    .couverture::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 28px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='20'%3E%3Ccircle cx='20' cy='0' r='20' fill='%23f6efe1'/%3E%3C/svg%3E") 0 0 / 56px 28px repeat-x;
+    }
+    .couverture::after { content: ""; position: absolute; inset: 52px 22px 22px; border: 2px solid var(--or); outline: 1px solid var(--or); outline-offset: -10px; pointer-events: none; }
+    .couverture img { width: 240px; margin-bottom: 28px; }
+    .couverture h1 { color: var(--creme); font-size: 4rem; font-weight: 600; margin: 0; }
+    .couverture .script { font-family: var(--script); color: var(--or-clair); font-size: 2.6rem; line-height: 1; margin: 0 0 .1em; }
+    .couverture .sous { letter-spacing: .2em; text-transform: uppercase; font-size: .8rem; color: var(--or-clair); margin-top: 1.4em; }
+
+    /* Esprit */
+    .mots { display: flex; flex-wrap: wrap; gap: 14px; margin: 1.2em 0 1.6em; }
+    .mots span { font-family: var(--titre); font-size: 1.7rem; font-weight: 700; color: var(--vert); padding: .1em .8em; border: 2px solid var(--or); border-radius: 99px; }
+    .phrase { font-family: var(--titre); font-style: italic; font-size: 1.25rem; color: var(--encre); border-left: 3px solid var(--or); padding-left: .8em; margin-bottom: .6em; }
+
+    /* Logos */
+    .logo-fond { border-radius: 10px; display: flex; align-items: center; justify-content: center; padding: 28px; aspect-ratio: 4 / 3; }
+    .logo-fond img { width: 62%; }
+    .fond-creme { background: var(--creme); border: 1px solid var(--creme-fonce); }
+    .fond-vert { background: var(--vert); }
+    .fond-ardoise { background: var(--ardoise); }
+    .fond-photo { background: url("../docs/images/salle.jpg") center / cover; position: relative; }
+    .fond-photo::after { content: "✕"; position: absolute; top: 8px; right: 12px; color: #fff; font-size: 1.4rem; text-shadow: 0 1px 4px #000; }
+    .protection { position: relative; display: inline-block; padding: 26px; border: 1px dashed var(--or-fonce); border-radius: 50%; }
+    .protection img { width: 150px; }
+    .interdits { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .interdits figure { margin: 0; text-align: center; font-size: .8rem; }
+    .interdits .boite { background: var(--blanc-casse); border: 1px solid var(--creme-fonce); border-radius: 8px; height: 120px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+    .interdits .boite::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top right, transparent calc(50% - 1.5px), rgba(168,64,47,.75) 50%, transparent calc(50% + 1.5px)); }
+    .interdits img { width: 80px; }
+
+    /* Couleurs */
+    .nuancier { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .nuance { border-radius: 10px; overflow: hidden; border: 1px solid var(--creme-fonce); background: #fff; }
+    .nuance__pastille { height: 96px; }
+    .nuance__infos { padding: 12px 14px; font-size: .82rem; line-height: 1.5; }
+    .nuance__infos b { display: block; font-family: var(--titre); font-size: 1.25rem; color: var(--encre); }
+    .nuance__infos code { font-family: ui-monospace, Consolas, monospace; font-size: .8rem; }
+    .proportions { display: flex; height: 34px; border-radius: 8px; overflow: hidden; margin: 18px 0 6px; }
+    .proportions span { display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 600; }
+
+    /* Typos */
+    .typo { padding: 22px 0; border-top: 1px solid var(--creme-fonce); display: grid; grid-template-columns: 220px 1fr; gap: 24px; align-items: baseline; }
+    .typo__nom { font-weight: 600; color: var(--encre); }
+    .typo__nom small { display: block; font-weight: 400; color: #6f6f63; }
+    .ex-titre { font-family: var(--titre); font-weight: 700; font-size: 3rem; color: var(--encre); line-height: 1; }
+    .ex-script { font-family: var(--script); font-size: 3.2rem; color: var(--or-fonce); line-height: 1; }
+    .ex-corps { font-size: 1.05rem; }
+    .hierarchie { background: var(--blanc-casse); border: 1px solid var(--creme-fonce); border-radius: 10px; padding: 26px; text-align: center; }
+
+    /* Éléments signature */
+    .elements { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .element { background: var(--blanc-casse); border: 1px solid var(--creme-fonce); border-radius: 10px; padding: 16px; text-align: center; font-size: .85rem; }
+    .element__visuel { height: 110px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; border-radius: 6px; }
+    .element b { display: block; font-family: var(--titre); font-size: 1.15rem; color: var(--encre); }
+    .v-filet { width: 70%; height: 70px; border: 3px solid var(--or); outline: 1px solid var(--or); outline-offset: -9px; }
+    .v-losange { gap: 14px; color: var(--or); font-size: 1rem; }
+    .v-losange i { width: 60px; height: 1px; background: var(--or); }
+    .v-cadre { background: var(--ardoise); }
+    .v-cadre div { width: 60%; height: 80px; border: 2px solid var(--or); border-radius: 14px; box-shadow: inset 0 0 0 4px var(--ardoise), inset 0 0 0 5px rgba(184,147,90,.4); }
+    .v-feston { background: var(--vert); align-items: flex-start; position: relative; }
+    .v-feston::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 22px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='20'%3E%3Ccircle cx='20' cy='0' r='20' fill='%23f6efe1'/%3E%3C/svg%3E") 0 0 / 44px 22px repeat-x; }
+    .v-cartouche span { font-family: var(--titre); font-style: italic; font-weight: 600; font-size: 1.2rem; border: 1px solid var(--or); background: linear-gradient(#fff, #f3ebdb); padding: .25em 1.1em; }
+    .v-tampon { background: var(--vert); }
+    .v-tampon div { width: 92px; height: 92px; border-radius: 50%; background: var(--creme); border: 3px solid var(--or); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--vert); font-family: var(--titre); font-weight: 700; font-size: 1.9rem; line-height: 1; position: relative; }
+    .v-tampon div::after { content: ""; position: absolute; inset: 6px; border-radius: 50%; border: 1px solid var(--or); }
+    .v-tampon small { font-family: var(--corps); font-size: .5rem; letter-spacing: .12em; text-transform: uppercase; color: var(--or-fonce); margin-top: 3px; }
+
+    /* Modèles */
+    .modele { text-align: center; }
+    .modele img { border-radius: 4px; box-shadow: 0 12px 30px rgba(0,0,0,.18); margin-bottom: 14px; }
+    .modele b { font-family: var(--titre); font-size: 1.4rem; color: var(--encre); display: block; }
+
+    .formats td, .formats th { text-align: left; padding: .5em .8em .5em 0; border-bottom: 1px solid var(--creme-fonce); font-size: .9rem; vertical-align: top; }
+    .formats { border-collapse: collapse; width: 100%; }
+    .formats th { font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--or-fonce); }
+    .liste-controle { columns: 2; gap: 28px; padding-left: 0; list-style: none; }
+    .liste-controle li { break-inside: avoid; padding-left: 1.6em; position: relative; margin-bottom: .5em; }
+    .liste-controle li::before { content: ""; position: absolute; left: 0; top: .3em; width: .9em; height: .9em; border: 1.5px solid var(--or-fonce); border-radius: 3px; }
+
+    @media (max-width: 760px) {
+      .grille-2, .grille-3, .nuancier, .elements, .interdits { grid-template-columns: 1fr 1fr; }
+      .typo { grid-template-columns: 1fr; gap: 6px; }
+      .liste-controle { columns: 1; }
+      .couverture h1 { font-size: 2.8rem; }
+    }
+    @media print {
+      body { background: var(--creme); font-size: 12.5px; }
+      .page { width: auto; padding: 0; border: 0; break-before: page; }
+      .couverture { min-height: 267mm; break-after: page; }
+      .carte, .nuance, .element, .typo, .modele, figure, .hierarchie { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<section class="couverture">
+  <img src="../docs/images/logo-chef.png" alt="Logo du Café de la Paix">
+  <p class="script">charte graphique</p>
+  <h1>Café de la Paix</h1>
+  <p class="sous">Café · Restaurant · Bar — Bellerive-sur-Allier</p>
+</section>
+
+<!-- 1. L'ESPRIT -->
+<section class="page">
+  <p class="num">un</p>
+  <h2>L'esprit de la maison</h2>
+  <p class="intro">Le Café de la Paix, c'est le bistrot de quartier à la française : on y mange bien, sans chichis, à prix honnête. Tout ce qui sort du café, du flyer à la publication Facebook, doit donner cette même impression : <b>chaleureux, soigné, mais jamais prétentieux</b>.</p>
+  <div class="mots"><span>Chaleureux</span><span>Généreux</span><span>Fait maison</span><span>Bistrot</span></div>
+
+  <div class="grille-2">
+    <div>
+      <h3>Notre façon de parler</h3>
+      <ul class="regles">
+        <li>On <b>vouvoie</b>, mais simplement, comme au comptoir.</li>
+        <li>Des phrases courtes. Un message par support.</li>
+        <li>On parle de ce qu'il y a dans l'assiette, avec des mots concrets.</li>
+        <li>Toujours dire <b>quand</b>, <b>où</b> et <b>comment réserver</b>.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Exemples</h3>
+      <p class="phrase">« Vendredi soir, on remet le couvert. »</p>
+      <p class="phrase">« Ici, on mange bien et on ne traîne pas. »</p>
+      <p class="phrase">« Les places partent vite : pensez à réserver. »</p>
+      <p class="legende"><span class="non">À éviter</span> : « Expérience culinaire d'exception », abus de points d'exclamation, majuscules partout.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2. LOGOS -->
+<section class="page">
+  <p class="num">deux</p>
+  <h2>Les logos</h2>
+  <div class="grille-2">
+    <div class="carte">
+      <img src="../docs/images/logo-chef.png" alt="Logo principal : le chef au plateau" style="width:200px;margin:0 auto 14px">
+      <h3 style="margin-top:0">Logo principal — le chef</h3>
+      <p>Le chef moustachu qui sert un café. C'est la signature du café : il apparaît <b>sur tous les supports</b> (flyers, affiches, site, réseaux sociaux, enseigne).</p>
+    </div>
+    <div class="carte">
+      <img src="../docs/images/logo-terrasse.png" alt="Logo secondaire : la table de terrasse" style="width:200px;margin:0 auto 14px">
+      <h3 style="margin-top:0">Logo secondaire — la terrasse</h3>
+      <p>Plus sobre, sans personnage. Pour les <b>petits espaces</b> et les usages élégants : pied de page, tampon, cartes de fidélité, étiquettes, menu de fête.</p>
+    </div>
+  </div>
+
+  <h3>Sur quels fonds</h3>
+  <div class="grille-3" style="grid-template-columns:repeat(4,1fr)">
+    <figure style="margin:0"><div class="logo-fond fond-vert"><img src="../docs/images/logo-chef.png" alt=""></div><p class="legende"><span class="ok">Idéal</span> · vert bouteille</p></figure>
+    <figure style="margin:0"><div class="logo-fond fond-ardoise"><img src="../docs/images/logo-chef.png" alt=""></div><p class="legende"><span class="ok">Idéal</span> · ardoise</p></figure>
+    <figure style="margin:0"><div class="logo-fond fond-creme"><img src="../docs/images/logo-chef.png" alt=""></div><p class="legende"><span class="ok">Possible</span> · crème</p></figure>
+    <figure style="margin:0"><div class="logo-fond fond-photo"><img src="../docs/images/logo-chef.png" alt=""></div><p class="legende"><span class="non">Éviter</span> · photo chargée</p></figure>
+  </div>
+
+  <div class="grille-2" style="margin-top:22px; align-items:center">
+    <div>
+      <h3>Espace de respiration et taille minimale</h3>
+      <p>Laisser autour du logo une marge vide au moins égale à <b>¼ de son diamètre</b>. Pas de texte, de bord de page ou d'image dans cette zone.</p>
+      <p>Taille minimale : <b>2,5 cm</b> de diamètre à l'impression, <b>80 pixels</b> à l'écran. En dessous, utiliser le logo terrasse ou simplement le nom écrit.</p>
+    </div>
+    <div style="text-align:center"><div class="protection"><img src="../docs/images/logo-chef.png" alt="Zone de protection autour du logo"></div></div>
+  </div>
+
+  <h3>À ne pas faire</h3>
+  <div class="interdits">
+    <figure><div class="boite"><img src="../docs/images/logo-chef.png" alt="" style="transform:scaleX(1.5)"></div><figcaption>Déformer</figcaption></figure>
+    <figure><div class="boite"><img src="../docs/images/logo-chef.png" alt="" style="filter:hue-rotate(160deg) saturate(3)"></div><figcaption>Changer les couleurs</figcaption></figure>
+    <figure><div class="boite"><img src="../docs/images/logo-chef.png" alt="" style="transform:rotate(-25deg)"></div><figcaption>Faire pivoter</figcaption></figure>
+    <figure><div class="boite"><img src="../docs/images/logo-chef.png" alt="" style="width:140px;border-radius:0;object-fit:cover;height:70px;object-position:top"></div><figcaption>Recadrer, couper</figcaption></figure>
+  </div>
+</section>
+
+<!-- 3. COULEURS -->
+<section class="page">
+  <p class="num">trois</p>
+  <h2>Les couleurs</h2>
+  <p class="intro">Quatre couleurs, tirées du logo et de la salle. Le vert et la crème font l'essentiel ; le doré est un fil, jamais un fond.</p>
+  <div class="nuancier">
+    <div class="nuance"><div class="nuance__pastille" style="background:#1e3a2b"></div><div class="nuance__infos"><b>Vert bouteille</b>Couleur principale, fonds de soirée<br><code>#1E3A2B</code> · RVB 30 58 43<br>CMJN 48 0 26 77</div></div>
+    <div class="nuance"><div class="nuance__pastille" style="background:#f6efe1"></div><div class="nuance__infos"><b>Crème</b>Fonds clairs, textes sur vert<br><code>#F6EFE1</code> · RVB 246 239 225<br>CMJN 0 3 9 4</div></div>
+    <div class="nuance"><div class="nuance__pastille" style="background:#b8935a"></div><div class="nuance__infos"><b>Or</b>Filets, cadres, losanges, accroches<br><code>#B8935A</code> · RVB 184 147 90<br>CMJN 0 20 51 28</div></div>
+    <div class="nuance"><div class="nuance__pastille" style="background:#272d33"></div><div class="nuance__infos"><b>Ardoise</b>Menus, plats du jour<br><code>#272D33</code> · RVB 39 45 51<br>CMJN 24 12 0 80</div></div>
+    <div class="nuance"><div class="nuance__pastille" style="background:#8a6a33"></div><div class="nuance__infos"><b>Or foncé</b>Petits textes dorés sur fond clair<br><code>#8A6A33</code> · RVB 138 106 51<br>CMJN 0 23 63 46</div></div>
+    <div class="nuance"><div class="nuance__pastille" style="background:#1b2a22"></div><div class="nuance__infos"><b>Encre</b>Titres et textes sur fond clair<br><code>#1B2A22</code> · RVB 27 42 34<br>CMJN 36 0 19 84</div></div>
+  </div>
+  <div class="proportions" aria-label="Proportions conseillées">
+    <span style="flex:55;background:#1e3a2b;color:#f6efe1">Vert ou ardoise · 55 %</span>
+    <span style="flex:35;background:#f6efe1;color:#1e3a2b;border:1px solid #ebe1cb">Crème · 35 %</span>
+    <span style="flex:10;background:#b8935a;color:#142a1f">Or</span>
+  </div>
+  <p class="legende">Les valeurs CMJN sont indicatives : pour une impression soignée, demander une épreuve à l'imprimeur. Pour un doré plus riche, un Pantone 7562 C est proche du ton « Or ».</p>
+</section>
+
+<!-- 4. TYPOGRAPHIES -->
+<section class="page">
+  <p class="num">quatre</p>
+  <h2>Les typographies</h2>
+  <p class="intro">Trois polices, gratuites, à télécharger sur <b>fonts.google.com</b>. Elles s'utilisent aussi dans Canva, Word ou sur le site.</p>
+  <div class="typo"><div class="typo__nom">Cormorant Garamond<small>Titres, noms des plats, dates — Gras ou Demi-gras</small></div><div class="ex-titre">Bœuf bourguignon</div></div>
+  <div class="typo"><div class="typo__nom">Great Vibes<small>Accroches manuscrites — 1 à 3 mots, jamais en majuscules</small></div><div class="ex-script">Soirée · le week-end</div></div>
+  <div class="typo"><div class="typo__nom">Work Sans<small>Textes, horaires, téléphone, mentions</small></div><div class="ex-corps">Formule du midi : entrée, plat, fromage ou dessert, café et ¼ de vin. Réservation au comptoir ou par téléphone.</div></div>
+
+  <h3>La hiérarchie type d'un flyer</h3>
+  <div class="hierarchie">
+    <p style="font-family:var(--script);font-size:2.4rem;color:var(--or-fonce);line-height:1;margin:0">l'accroche</p>
+    <p style="font-family:var(--titre);font-weight:700;font-size:3rem;color:var(--encre);line-height:1;margin:.1em 0 .3em">Le titre</p>
+    <p style="display:inline-block;font-family:var(--titre);font-style:italic;font-weight:600;font-size:1.2rem;border:1px solid var(--or);padding:.2em 1em;margin-bottom:.8em">La date et l'heure</p>
+    <p style="font-family:var(--titre);font-weight:700;font-size:1.4rem;margin:0;color:var(--encre)">Le contenu</p>
+    <p style="font-family:var(--titre);font-style:italic;font-size:1.1rem;margin:0 0 .8em">le détail en italique</p>
+    <p style="font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;margin:0">Les infos pratiques en petites capitales</p>
+  </div>
+</section>
+
+<!-- 5. ÉLÉMENTS SIGNATURE -->
+<section class="page">
+  <p class="num">cinq</p>
+  <h2>Les éléments signature</h2>
+  <p class="intro">Ce sont eux qui rendent un support reconnaissable au premier coup d'œil, même sans logo. Chaque support en utilise au moins deux.</p>
+  <div class="elements">
+    <div class="element"><div class="element__visuel"><div class="v-filet"></div></div><b>Le double filet doré</b>Un trait épais, un trait fin. Encadre les flyers et les menus.</div>
+    <div class="element"><div class="element__visuel v-losange"><i></i>◆<i></i></div><b>Le losange</b>Sépare les plats et les rubriques.</div>
+    <div class="element"><div class="element__visuel v-cadre"><div></div></div><b>Le cadre ardoise</b>Coins arrondis, filet doré : celui du tableau des menus.</div>
+    <div class="element"><div class="element__visuel v-feston"></div><b>Le feston du store</b>Rappelle la toile de la terrasse. En haut des supports verts.</div>
+    <div class="element"><div class="element__visuel v-cartouche"><span>Vendredi · 19 h</span></div><b>Le cartouche</b>Met en valeur la date ou le moment.</div>
+    <div class="element"><div class="element__visuel v-tampon"><div>18 €<small>tout compris</small></div></div><b>Le tampon prix</b>Rond, double cercle doré. Pour un prix ou une offre.</div>
+  </div>
+</section>
+
+<!-- 6. LES TROIS MODÈLES -->
+<section class="page">
+  <p class="num">six</p>
+  <h2>Trois ambiances, trois usages</h2>
+  <p class="intro">Pour rester reconnaissable, chaque communication part de l'un de ces trois modèles. On change les textes, jamais la structure.</p>
+  <div class="grille-3">
+    <div class="modele"><img src="exemples/apercu-vert.png" alt="Exemple de flyer vert : soirée moules-frites"><b>Vert</b><p>Soirées, événements, animations du vendredi.</p></div>
+    <div class="modele"><img src="exemples/apercu-ardoise.png" alt="Exemple de flyer ardoise : formule du midi"><b>Ardoise</b><p>Menus, formule, plats du jour, produits de saison.</p></div>
+    <div class="modele"><img src="exemples/apercu-creme.png" alt="Exemple de flyer crème : menu du week-end"><b>Crème</b><p>Menus de fête, menu du week-end, informations, fermetures.</p></div>
+  </div>
+  <p class="legende" style="text-align:center;margin-top:18px">Ces modèles se remplissent dans l'<b>Atelier flyers</b> (fichier <code>flyers.html</code>), qui produit le PDF à imprimer ou l'image pour Facebook et Instagram.</p>
+</section>
+
+<!-- 7. FORMATS ET IMPRESSION -->
+<section class="page">
+  <p class="num">sept</p>
+  <h2>Formats et check-list</h2>
+  <div class="grille-2">
+    <div>
+      <h3 style="margin-top:0">Les formats</h3>
+      <table class="formats">
+        <tr><th>Support</th><th>Taille</th><th>Usage</th></tr>
+        <tr><td>Flyer</td><td>A5 · 14,8 × 21 cm</td><td>Comptoir, tables, boîtes aux lettres</td></tr>
+        <tr><td>Affiche</td><td>A4 · 21 × 29,7 cm</td><td>Vitrine, porte, commerces voisins</td></tr>
+        <tr><td>Post</td><td>1080 × 1080 px</td><td>Facebook, Instagram</td></tr>
+        <tr><td>Story</td><td>1080 × 1920 px</td><td>Stories Facebook et Instagram</td></tr>
+      </table>
+      <p class="legende">Impression conseillée : papier mat 250 g pour les flyers, 170 g pour les affiches. Chez un imprimeur, demander 3 mm de fond perdu.</p>
+    </div>
+    <div>
+      <h3 style="margin-top:0">Avant de diffuser</h3>
+      <ul class="liste-controle" style="columns:1">
+        <li>Le logo est présent et n'est pas déformé</li>
+        <li>Un seul message principal</li>
+        <li>Le jour, la date <b>et</b> l'heure</li>
+        <li>Comment réserver (téléphone)</li>
+        <li>L'adresse ou « Bellerive-sur-Allier »</li>
+        <li>Le prix, s'il y en a un, est clair</li>
+        <li>Si on parle d'alcool : « L'abus d'alcool est dangereux pour la santé, à consommer avec modération. »</li>
+        <li>Relu par une deuxième personne</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

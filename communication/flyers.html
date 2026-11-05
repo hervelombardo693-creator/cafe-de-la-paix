@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atelier flyers — Café de la Paix</title>
+  <link rel="icon" type="image/png" href="../docs/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Great+Vibes&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style id="taille-page">@page { size: 148mm 210mm; margin: 0; }</style>
+  <style>
+    :root {
+      --vert: #1e3a2b; --vert-nuit: #142a1f;
+      --creme: #f6efe1; --creme-fonce: #ebe1cb; --blanc-casse: #fbf8f1;
+      --or: #b8935a; --or-fonce: #8a6a33; --or-clair: #d9bd8a;
+      --ardoise: #272d33; --encre: #1b2a22; --texte: #3b4038;
+      --titre: "Cormorant Garamond", Garamond, Georgia, serif;
+      --corps: "Work Sans", system-ui, sans-serif;
+      --script: "Great Vibes", "Brush Script MT", cursive;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font: 400 15px/1.5 var(--corps); color: var(--texte); background: #d9d4c8; }
+
+    /* ===== Interface ===== */
+    .atelier { display: grid; grid-template-columns: 380px 1fr; min-height: 100vh; }
+    .panneau { background: var(--creme); border-right: 1px solid var(--creme-fonce); padding: 20px 22px 40px; overflow-y: auto; max-height: 100vh; position: sticky; top: 0; }
+    .panneau__tete { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+    .panneau__tete img { width: 52px; height: 52px; }
+    .panneau__tete h1 { font-family: var(--titre); font-size: 1.6rem; line-height: 1; margin: 0; color: var(--vert); }
+    .panneau__tete p { margin: 2px 0 0; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--or-fonce); }
+    fieldset { border: 0; padding: 0; margin: 0 0 16px; }
+    legend, label { display: block; font-weight: 600; font-size: .8rem; color: var(--encre); margin-bottom: 5px; }
+    label small, legend small { font-weight: 400; color: #7a7a6e; }
+    input[type=text], textarea, select {
+      width: 100%; font: inherit; padding: 8px 10px; border: 1px solid #cfc4ab; border-radius: 6px; background: #fff; color: var(--encre);
+    }
+    textarea { resize: vertical; min-height: 64px; }
+    input:focus, textarea:focus, select:focus { outline: 2px solid var(--or); outline-offset: 1px; border-color: var(--or); }
+    .champ { margin-bottom: 12px; }
+    .deux { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .modeles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .modeles label { margin: 0; cursor: pointer; }
+    .modeles input { position: absolute; opacity: 0; }
+    .modeles span {
+      display: block; text-align: center; padding: 10px 4px 8px; border-radius: 8px; border: 2px solid transparent;
+      font-size: .78rem; font-weight: 600;
+    }
+    .modeles span::before { content: ""; display: block; height: 34px; border-radius: 5px; margin-bottom: 6px; border: 2px solid var(--or); }
+    .m-vert::before { background: var(--vert); }
+    .m-ardoise::before { background: var(--ardoise); border-radius: 10px !important; }
+    .m-creme::before { background: var(--blanc-casse); }
+    .modeles input:checked + span { border-color: var(--vert); background: #fff; }
+    .modeles input:focus-visible + span { outline: 2px solid var(--or); }
+    .case { display: flex; gap: 8px; align-items: flex-start; font-weight: 400; font-size: .85rem; }
+    .case input { margin-top: 3px; }
+    .aide { font-size: .78rem; color: #6f6f63; margin: 4px 0 0; }
+
+    .actions { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: flex-end; padding: 14px 24px; background: rgba(217,212,200,.92); backdrop-filter: blur(4px); }
+    .actions__info { margin-right: auto; font-size: .85rem; color: #555; }
+    .btn { font: 600 .9rem var(--corps); padding: 10px 16px; border-radius: 6px; border: 2px solid var(--vert); background: var(--vert); color: var(--creme); cursor: pointer; }
+    .btn:hover { background: var(--vert-nuit); }
+    .btn--clair { background: transparent; color: var(--vert); }
+    .btn--clair:hover { background: #fff; }
+    .btn:disabled { opacity: .5; cursor: wait; }
+    .zone { display: flex; flex-direction: column; }
+    .apercu { flex: 1; display: flex; justify-content: center; align-items: flex-start; padding: 10px 24px 48px; }
+    .scene { position: relative; box-shadow: 0 20px 50px rgba(0,0,0,.25); }
+    .scene .planche { position: absolute; top: 0; left: 0; transform-origin: top left; }
+
+    /* ===== La planche (le flyer lui-même) =====
+       Toutes les tailles sont en cqw / cqmin : le même modèle
+       s'adapte à chaque format. --k réduit le contenu s'il déborde. */
+    .planche {
+      --w: 559px; --h: 794px; --k: 1;
+      width: var(--w); height: var(--h);
+      position: relative; overflow: hidden; container-type: size;
+      font-family: var(--corps);
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+    .planche[data-format="a4"]    { --w: 794px;  --h: 1123px; }
+    .planche[data-format="carre"] { --w: 1080px; --h: 1080px; }
+    .planche[data-format="story"] { --w: 1080px; --h: 1920px; }
+
+    .cadre { position: absolute; pointer-events: none; }
+    .cadre--1 { inset: 3.4cqmin; border: .5cqmin solid var(--or); }
+    .cadre--2 { inset: 5cqmin; border: .18cqmin solid var(--or); }
+    .feston {
+      position: absolute; top: 0; left: 0; right: 0; height: 4cqw; display: none;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='20' viewBox='0 0 40 20'%3E%3Ccircle cx='20' cy='0' r='20' fill='%23f6efe1'/%3E%3C/svg%3E") 0 0 / 8cqw 4cqw repeat-x;
+    }
+
+    .contenu {
+      position: absolute; inset: 9cqmin 9cqmin 8cqmin;
+      display: flex; flex-direction: column; align-items: center; justify-content: space-evenly;
+      text-align: center; overflow: hidden; gap: calc(var(--k) * 2.2cqw);
+    }
+    .contenu > * { margin: 0; flex-shrink: 0; }
+    .p-logo { width: calc(var(--k) * 26cqw); height: auto; }
+    .p-marque { display: none; font-family: var(--script); font-size: calc(var(--k) * 10cqw); line-height: 1; }
+    .p-accroche { font-family: var(--script); font-size: calc(var(--k) * 8.5cqw); line-height: 1; margin-bottom: calc(var(--k) * -1cqw) !important; }
+    .p-titre { font-family: var(--titre); font-weight: 700; font-size: calc(var(--k) * 11.5cqw); line-height: .98; letter-spacing: -.01em; }
+    .p-date {
+      font-family: var(--titre); font-style: italic; font-weight: 600; font-size: calc(var(--k) * 4.4cqw);
+      padding: .25em 1.1em; border: .3cqmin solid var(--or); line-height: 1.25;
+    }
+    .p-liste { list-style: none; padding: 0; }
+    .p-liste li { line-height: 1.15; }
+    .p-liste li + li::before { content: "◆"; display: block; color: var(--or); font-size: calc(var(--k) * 2.2cqw); margin: calc(var(--k) * 1.6cqw) 0 calc(var(--k) * 1.8cqw); }
+    .p-liste strong { display: block; font-family: var(--titre); font-weight: 700; font-size: calc(var(--k) * 5.4cqw); }
+    .p-liste em { display: block; font-family: var(--titre); font-style: italic; font-weight: 500; font-size: calc(var(--k) * 3.9cqw); margin-top: .1em; }
+    .p-texte { font-size: calc(min(var(--k), 1) * 3.3cqw); line-height: 1.45; max-width: 74cqw; white-space: pre-line; }
+    .p-prix {
+      width: calc(var(--k) * 23cqw); height: calc(var(--k) * 23cqw); border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;
+      border: .55cqmin solid var(--or);
+    }
+    .p-prix::after { content: ""; position: absolute; inset: calc(var(--k) * 1.3cqw); border-radius: 50%; border: .18cqmin solid var(--or); }
+    .p-prix strong { font-family: var(--titre); font-weight: 700; font-size: calc(var(--k) * 8.4cqw); line-height: 1; }
+    .p-prix small { font-size: calc(var(--k) * 2.1cqw); letter-spacing: .14em; text-transform: uppercase; font-weight: 600; max-width: 80%; line-height: 1.2; }
+    .p-pied { font-size: calc(min(var(--k), 1) * 2.6cqw); letter-spacing: .12em; text-transform: uppercase; line-height: 1.6; padding-top: calc(var(--k) * 2cqw); border-top: .18cqmin solid var(--or); min-width: 60%; }
+    .p-pied b { font-weight: 600; }
+    .p-alcool { display: block; text-transform: none; letter-spacing: 0; font-size: .78em; opacity: .75; margin-top: .3em; }
+    [hidden] { display: none !important; }
+
+    /* Modèle VERT — soirées et événements */
+    .planche[data-modele="vert"] { background: var(--vert); color: var(--creme); }
+    .planche[data-modele="vert"] .feston { display: block; }
+    .planche[data-modele="vert"] .cadre--1 { top: 6.5cqw; }
+    .planche[data-modele="vert"] .cadre--2 { top: calc(6.5cqw + 1.6cqmin); }
+    .planche[data-modele="vert"] .contenu { top: calc(6.5cqw + 6cqmin); }
+    .planche[data-modele="vert"] .p-accroche { color: var(--or-clair); }
+    .planche[data-modele="vert"] .p-date { background: var(--creme); color: var(--vert); }
+    .planche[data-modele="vert"] .p-liste em, .planche[data-modele="vert"] .p-texte { color: rgba(246,239,225,.85); }
+    .planche[data-modele="vert"] .p-prix { background: var(--creme); color: var(--vert); }
+    .planche[data-modele="vert"] .p-prix small { color: var(--or-fonce); }
+
+    /* Modèle ARDOISE — menus, plats, produits */
+    .planche[data-modele="ardoise"] { background: var(--ardoise); color: var(--creme); }
+    .planche[data-modele="ardoise"] .cadre--1 { border-radius: 5cqmin; border-width: .6cqmin; }
+    .planche[data-modele="ardoise"] .cadre--2 { border-radius: 3.6cqmin; border-color: rgba(184,147,90,.45); }
+    .planche[data-modele="ardoise"] .p-logo { width: calc(var(--k) * 22cqw); }
+    .planche[data-modele="ardoise"] .p-accroche { color: var(--or-clair); }
+    .planche[data-modele="ardoise"] .p-titre { font-weight: 600; }
+    .planche[data-modele="ardoise"] .p-date { border-radius: 99px; color: var(--or-clair); }
+    .planche[data-modele="ardoise"] .p-liste em, .planche[data-modele="ardoise"] .p-texte { color: rgba(246,239,225,.75); }
+    .planche[data-modele="ardoise"] .p-prix strong { color: var(--or-clair); }
+    .planche[data-modele="ardoise"] .p-prix small { color: rgba(246,239,225,.7); }
+
+    /* Modèle CRÈME — menus de fête, annonces, informations */
+    .planche[data-modele="creme"] { background: var(--blanc-casse); color: var(--encre); }
+    .planche[data-modele="creme"] .p-logo { display: none; }
+    .planche[data-modele="creme"] .p-marque { display: block; color: #3b2a1a; padding-bottom: calc(var(--k) * 2cqw); border-bottom: .25cqmin solid var(--or); }
+    .planche[data-modele="creme"] .p-accroche { color: var(--or-fonce); }
+    .planche[data-modele="creme"] .p-titre { font-weight: 600; }
+    .planche[data-modele="creme"] .p-date { background: linear-gradient(#fff, #f3ebdb); }
+    .planche[data-modele="creme"] .p-liste em, .planche[data-modele="creme"] .p-texte { color: var(--texte); }
+    .planche[data-modele="creme"] .p-prix { background: var(--vert); color: var(--creme); }
+    .planche[data-modele="creme"] .p-prix small { color: var(--or-clair); }
+    .planche[data-modele="creme"] .p-pied { color: var(--vert); }
+
+    /* Impression : seule la planche, à sa taille réelle */
+    @media print {
+      body { background: none; }
+      .panneau, .actions { display: none !important; }
+      .atelier { display: block; }
+      .apercu { padding: 0; display: block; }
+      .scene { box-shadow: none; width: auto !important; height: auto !important; }
+      .scene .planche { position: static; transform: none !important; }
+      .planche[data-format="a5"] { width: 148mm; height: 210mm; }
+      .planche[data-format="a4"] { width: 210mm; height: 297mm; }
+    }
+    /* Mode export (?export=1) : la planche seule, sans interface */
+    body.export { background: none; }
+    body.export .panneau, body.export .actions { display: none; }
+    body.export .atelier { display: block; }
+    body.export .apercu { padding: 0; display: block; }
+    body.export .scene { box-shadow: none; }
+    body.export .scene .planche { transform: none !important; }
+
+    @media (max-width: 900px) {
+      .atelier { grid-template-columns: 1fr; }
+      .panneau { max-height: none; position: static; border-right: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="atelier">
+  <form class="panneau" id="form" autocomplete="off">
+    <div class="panneau__tete">
+      <img src="../docs/images/logo-chef.png" alt="">
+      <div><h1>Atelier flyers</h1><p>Café de la Paix</p></div>
+    </div>
+
+    <div class="champ">
+      <label for="exemple">Partir d'un exemple</label>
+      <select id="exemple"></select>
+    </div>
+
+    <fieldset>
+      <legend>Modèle</legend>
+      <div class="modeles">
+        <label><input type="radio" name="modele" value="vert" checked><span class="m-vert">Vert<br><small>soirées</small></span></label>
+        <label><input type="radio" name="modele" value="ardoise"><span class="m-ardoise">Ardoise<br><small>menus</small></span></label>
+        <label><input type="radio" name="modele" value="creme"><span class="m-creme">Crème<br><small>fêtes, infos</small></span></label>
+      </div>
+    </fieldset>
+
+    <div class="champ">
+      <label for="format">Format</label>
+      <select id="format" name="format">
+        <option value="a5">Flyer A5 (14,8 × 21 cm)</option>
+        <option value="a4">Affiche A4 (21 × 29,7 cm)</option>
+        <option value="carre">Post Facebook / Instagram (carré)</option>
+        <option value="story">Story Facebook / Instagram</option>
+      </select>
+    </div>
+
+    <div class="champ"><label for="accroche">Accroche <small>(écriture manuscrite, 1 à 3 mots)</small></label><input type="text" id="accroche" name="accroche"></div>
+    <div class="champ"><label for="titre">Titre</label><input type="text" id="titre" name="titre"></div>
+    <div class="champ"><label for="date">Date et heure <small>(dans le cartouche)</small></label><input type="text" id="date" name="date"></div>
+    <div class="champ">
+      <label for="liste">Liste <small>(une ligne par élément)</small></label>
+      <textarea id="liste" name="liste" rows="4"></textarea>
+      <p class="aide">Pour une précision en italique : <b>Plat | garniture</b></p>
+    </div>
+    <div class="champ"><label for="texte">Texte libre</label><textarea id="texte" name="texte" rows="2"></textarea></div>
+    <div class="deux">
+      <div class="champ"><label for="prix">Prix <small>(vide = sans)</small></label><input type="text" id="prix" name="prix"></div>
+      <div class="champ"><label for="mention">Sous le prix</label><input type="text" id="mention" name="mention"></div>
+    </div>
+    <div class="champ"><label for="pied">Bas du flyer <small>(réservation, adresse)</small></label><textarea id="pied" name="pied" rows="2"></textarea></div>
+    <label class="case"><input type="checkbox" id="alcool" name="alcool"> Ajouter « L'abus d'alcool est dangereux pour la santé » <small>(obligatoire dès qu'on parle de vin, bière, apéritif…)</small></label>
+  </form>
+
+  <div class="zone">
+    <div class="actions">
+      <span class="actions__info" id="info"></span>
+      <button type="button" class="btn btn--clair" id="imprimer">Imprimer / PDF</button>
+      <button type="button" class="btn" id="png">Télécharger l'image</button>
+    </div>
+    <div class="apercu" id="apercu">
+      <div class="scene" id="scene">
+        <div class="planche" id="planche" data-modele="vert" data-format="a5">
+          <div class="feston"></div>
+          <div class="cadre cadre--1"></div>
+          <div class="cadre cadre--2"></div>
+          <div class="contenu" id="contenu">
+            <img class="p-logo" id="p-logo" alt="Café de la Paix">
+            <p class="p-marque">Café de la Paix</p>
+            <p class="p-accroche" id="p-accroche"></p>
+            <h2 class="p-titre" id="p-titre"></h2>
+            <p class="p-date" id="p-date"></p>
+            <ul class="p-liste" id="p-liste"></ul>
+            <p class="p-texte" id="p-texte"></p>
+            <div class="p-prix" id="p-prix"><strong></strong><small></small></div>
+            <p class="p-pied" id="p-pied"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../docs/donnees.js"></script>
+<script src="logos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const form = $("form"), planche = $("planche"), scene = $("scene"), contenu = $("contenu");
+  const C = typeof CAFE !== "undefined" ? CAFE : {};
+
+  /* Bas du flyer par défaut, à partir des données du site */
+  const tel = (C.telephone || "").trim();
+  const piedDefaut = "Café de la Paix · Bellerive-sur-Allier\n" + (tel ? "Réservation : " + tel : "Réservation au comptoir ou par téléphone");
+
+  const formats = {
+    a5:    { nom: "Flyer A5", page: "148mm 210mm", export: 1748 },
+    a4:    { nom: "Affiche A4", page: "210mm 297mm", export: 2480 },
+    carre: { nom: "Post carré 1080 × 1080", page: "1080px 1080px", export: 1080 },
+    story: { nom: "Story 1080 × 1920", page: "1080px 1920px", export: 1080 }
+  };
+
+  const we = C.weekend || { quand: "", plats: [] };
+  const exemples = {
+    "soiree": {
+      nom: "Soirée à thème (vert)", modele: "vert", format: "a5",
+      accroche: "Soirée", titre: "Moules-frites", date: "Vendredi 13 novembre · 19 h",
+      liste: "Moules marinières | Frites maison\nDessert du jour", texte: "Une soirée conviviale pour finir la semaine.\nPlaces limitées, pensez à réserver.",
+      prix: "", mention: "", alcool: false
+    },
+    "beaujolais": {
+      nom: "Beaujolais nouveau (ardoise)", modele: "ardoise", format: "carre",
+      accroche: "il est arrivé !", titre: "Le Beaujolais nouveau", date: "Jeudi 19 novembre · le midi",
+      liste: "Planche de charcuterie | à partager\nLe Beaujolais nouveau | au verre ou en pichet", texte: "",
+      prix: "", mention: "", alcool: true
+    },
+    "weekend": {
+      nom: "Menu du week-end (crème)", modele: "creme", format: "a4",
+      accroche: "le menu du", titre: "Week-end", date: we.quand,
+      liste: we.plats.map((p) => p.nom + (p.garniture ? " | " + p.garniture : "")).join("\n"), texte: "",
+      prix: "", mention: "", alcool: false
+    },
+    "formule": {
+      nom: "Formule du midi (ardoise)", modele: "ardoise", format: "a4",
+      accroche: "tous les midis", titre: "Formule du midi", date: "Du lundi au samedi",
+      liste: "Entrée · Plat · Fromage ou dessert\nCafé · ¼ de vin", texte: "Cuisine maison, préparée chaque matin.",
+      prix: C.formule ? C.formule.prix : "18 €", mention: "tout compris", alcool: true
+    },
+    "annonce": {
+      nom: "Annonce / fermeture (crème)", modele: "creme", format: "carre",
+      accroche: "information", titre: "Fermeture exceptionnelle", date: "Du … au …",
+      liste: "", texte: "Toute l'équipe vous souhaite de bonnes fêtes.\nOn se retrouve dès la réouverture !",
+      prix: "", mention: "", alcool: false
+    }
+  };
+
+  const sel = $("exemple");
+  sel.appendChild(new Option("— Choisir —", ""));
+  Object.entries(exemples).forEach(([id, e]) => sel.appendChild(new Option(e.nom, id)));
+
+  function charger(id) {
+    const e = exemples[id];
+    if (!e) return;
+    form.modele.value = e.modele;
+    form.format.value = e.format;
+    ["accroche", "titre", "date", "liste", "texte", "prix", "mention"].forEach((k) => (form[k].value = e[k]));
+    form.alcool.checked = e.alcool;
+    if (!form.pied.value) form.pied.value = piedDefaut;
+    rendre();
+  }
+  sel.addEventListener("change", () => charger(sel.value));
+
+  function texteOuCacher(node, valeur) {
+    node.textContent = valeur;
+    node.hidden = !valeur.trim();
+  }
+
+  function rendre() {
+    const v = Object.fromEntries(new FormData(form));
+    planche.dataset.modele = v.modele;
+    planche.dataset.format = v.format;
+    $("p-logo").src = LOGOS.chef;
+
+    texteOuCacher($("p-accroche"), v.accroche);
+    texteOuCacher($("p-titre"), v.titre);
+    texteOuCacher($("p-date"), v.date);
+    texteOuCacher($("p-texte"), v.texte);
+
+    const ul = $("p-liste");
+    ul.textContent = "";
+    v.liste.split("\n").map((l) => l.trim()).filter(Boolean).forEach((l) => {
+      const [nom, detail] = l.split("|").map((s) => s.trim());
+      const li = document.createElement("li");
+      const s = document.createElement("strong"); s.textContent = nom; li.appendChild(s);
+      if (detail) { const em = document.createElement("em"); em.textContent = detail; li.appendChild(em); }
+      ul.appendChild(li);
+    });
+    ul.hidden = !ul.children.length;
+
+    const prix = $("p-prix");
+    prix.querySelector("strong").textContent = v.prix;
+    prix.querySelector("small").textContent = v.mention;
+    prix.hidden = !v.prix.trim();
+
+    const pied = $("p-pied");
+    pied.textContent = "";
+    v.pied.split("\n").filter((l) => l.trim()).forEach((l, i) => {
+      if (i) pied.appendChild(document.createElement("br"));
+      pied.appendChild(document.createTextNode(l));
+    });
+    if (form.alcool.checked) {
+      const a = document.createElement("span");
+      a.className = "p-alcool";
+      a.textContent = "L'abus d'alcool est dangereux pour la santé, à consommer avec modération.";
+      pied.appendChild(a);
+    }
+    pied.hidden = !pied.textContent.trim();
+
+    $("taille-page").textContent = "@page { size: " + formats[v.format].page + "; margin: 0; }";
+    ajuster();
+    echelle();
+    $("info").textContent = formats[v.format].nom;
+  }
+
+  /* Réduit le contenu tant qu'il déborde de la planche */
+  function ajuster() {
+    let k = planche.dataset.format === "story" ? 1.15 : 1;
+    planche.style.setProperty("--k", k);
+    while (contenu.scrollHeight > contenu.clientHeight + 1 && k > 0.45) {
+      k -= 0.03;
+      planche.style.setProperty("--k", k.toFixed(2));
+    }
+  }
+
+  /* Mise à l'échelle de l'aperçu à l'écran */
+  function echelle() {
+    if (document.body.classList.contains("export")) {
+      scene.style.width = planche.offsetWidth + "px";
+      scene.style.height = planche.offsetHeight + "px";
+      return;
+    }
+    const zone = $("apercu");
+    const dispoL = zone.clientWidth - 48;
+    const dispoH = window.innerHeight - 110;
+    const w = planche.offsetWidth, h = planche.offsetHeight;
+    const s = Math.min(1, dispoL / w, Math.max(dispoH, 420) / h);
+    planche.style.transform = "scale(" + s + ")";
+    scene.style.width = w * s + "px";
+    scene.style.height = h * s + "px";
+  }
+
+  form.addEventListener("input", rendre);
+  form.addEventListener("change", rendre);
+  window.addEventListener("resize", echelle);
+  $("imprimer").addEventListener("click", () => window.print());
+
+  $("png").addEventListener("click", async () => {
+    if (!window.html2canvas) { alert("L'export en image a besoin d'une connexion internet. Utilisez « Imprimer / PDF » en attendant."); return; }
+    const bouton = $("png");
+    bouton.disabled = true;
+    await document.fonts.ready;
+    const t = planche.style.transform;
+    planche.style.transform = "none";
+    try {
+      const f = formats[planche.dataset.format];
+      const canvas = await html2canvas(planche, { scale: f.export / planche.offsetWidth, backgroundColor: null, logging: false });
+      const a = document.createElement("a");
+      const nom = (form.titre.value || "flyer").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+      a.download = "cafe-de-la-paix-" + nom + "-" + planche.dataset.format + ".png";
+      a.href = canvas.toDataURL("image/png");
+      a.click();
+    } finally {
+      planche.style.transform = t;
+      bouton.disabled = false;
+    }
+  });
+
+  /* Paramètres d'adresse : ?exemple=soiree&format=a5&export=1 */
+  const params = new URLSearchParams(location.search);
+  if (params.get("export")) document.body.classList.add("export");
+  form.pied.value = piedDefaut;
+  charger(params.get("exemple") || "soiree");
+  if (params.get("modele")) form.modele.value = params.get("modele");
+  if (params.get("format")) form.format.value = params.get("format");
+  sel.value = params.get("exemple") || "soiree";
+  rendre();
+  document.fonts.ready.then(rendre);
+})();
+</script>
+</body>
+</html>
