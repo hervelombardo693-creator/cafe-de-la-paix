@@ -11,7 +11,7 @@ Ouvert le midi du lundi au samedi, et le vendredi soir pour les soirées spécia
 - `docs/index.html` — la page
 - `docs/style.css` — la mise en forme
 - `docs/script.js` — remplit la page à partir des données
-- `docs/donnees.js` — **le fichier à modifier** : menu de la semaine, soirée du vendredi, téléphone, adresse, horaires
+- `docs/donnees.js` — **le fichier à modifier** : menu de la semaine, menu du week-end, soirée spéciale, téléphone, adresse, horaires
 - `docs/images/` — les photos
 
 ## Voir le site en local

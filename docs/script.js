@@ -55,27 +55,36 @@
     carte.appendChild(plat("Plat", j.plat));
     grille.appendChild(carte);
   });
-  if (CAFE.semaine.samedi) {
-    const sam = el("article", "jour");
-    const derniere = CAFE.semaine.jours[CAFE.semaine.jours.length - 1];
-    if (derniere) {
-      const d = new Date(derniere.date + "T12:00:00");
-      d.setDate(d.getDate() + 1);
-      if (d.getDay() === 6 && isoDuJour === d.toISOString().slice(0, 10)) sam.classList.add("jour--aujourdhui");
-    }
-    sam.appendChild(el("h3", "jour__nom", "Samedi"));
-    sam.appendChild(el("p", "jour__date", "Le midi"));
-    sam.appendChild(plat("Au menu", CAFE.semaine.samedi));
-    grille.appendChild(sam);
+  /* Samedi midi : renvoie vers le menu du week-end */
+  const sam = el("a", "jour jour--weekend");
+  sam.href = "#weekend";
+  const derniere = CAFE.semaine.jours[CAFE.semaine.jours.length - 1];
+  if (derniere) {
+    const d = new Date(derniere.date + "T12:00:00");
+    d.setDate(d.getDate() + 1);
+    if (d.getDay() === 6 && isoDuJour === d.toISOString().slice(0, 10)) sam.classList.add("jour--aujourdhui");
   }
+  sam.appendChild(el("h3", "jour__nom", "Samedi"));
+  sam.appendChild(el("p", "jour__date", "Le midi"));
+  sam.appendChild(plat("Au menu", "Le menu du week-end ↓"));
+  grille.appendChild(sam);
 
-  /* Soirée du vendredi */
+  /* Menu du week-end */
+  $("#we-quand").textContent = CAFE.weekend.quand;
+  CAFE.weekend.plats.forEach((p) => {
+    const li = el("li");
+    li.appendChild(el("strong", null, p.nom));
+    if (p.garniture) li.appendChild(el("em", null, p.garniture));
+    $("#we-plats").appendChild(li);
+  });
+
+  /* Soirée spéciale du vendredi (facultative) */
   if (CAFE.soiree.titre) {
-    $(".affiche__titre").textContent = CAFE.soiree.titre;
-    if (CAFE.soiree.date) $(".affiche__date").textContent = CAFE.soiree.date + " · à partir de " + heure(CAFE.soir.ouverture);
-    if (CAFE.soiree.description) $(".affiche__desc").textContent = CAFE.soiree.description;
-  } else {
-    $(".affiche__date").textContent = "Vendredi · à partir de " + heure(CAFE.soir.ouverture);
+    const s = $("#soiree");
+    s.querySelector(".soiree__titre").textContent = CAFE.soiree.titre;
+    if (CAFE.soiree.date) s.querySelector(".soiree__sur").textContent = "Soirée spéciale · " + CAFE.soiree.date;
+    s.querySelector(".soiree__desc").textContent = CAFE.soiree.description;
+    s.hidden = false;
   }
 
   /* Tableau des horaires (lundi → dimanche) */
