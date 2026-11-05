@@ -81,6 +81,13 @@ p { margin: 0 0 1em; }
 .nav a:not(.btn) { color: var(--encre); text-decoration: none; font-weight: 500; font-size: .95rem; }
 .nav a:not(.btn):hover { color: var(--or-fonce); }
 .burger { display: none; }
+.icone-fb { width: 1.15em; height: 1.15em; flex: none; }
+.nav .nav__fb { display: inline-flex; align-items: center; gap: .45em; color: var(--vert); }
+.nav .nav__fb .icone-fb { width: 22px; height: 22px; }
+.nav__fb span { display: none; }
+.lien-fb { display: inline-flex; align-items: center; gap: .5em; font-weight: 600; color: var(--vert); }
+.lien-fb--pied { color: var(--or-clair); text-decoration: none; }
+.lien-fb--pied:hover { color: var(--creme); }
 
 /* Hero */
 .hero {
@@ -298,6 +305,7 @@ p { margin: 0 0 1em; }
   .nav.ouvert { display: flex; }
   .nav a:not(.btn) { padding: .8em 0; border-bottom: 1px solid var(--creme-fonce); }
   .nav .btn { margin-top: 12px; text-align: center; }
+  .nav__fb span { display: inline; }
 
   .maison, .weekend__inner, .infos__inner { grid-template-columns: 1fr; }
   .maison__photo { max-width: 420px; }

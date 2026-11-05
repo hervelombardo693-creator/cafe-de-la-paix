@@ -10,7 +10,7 @@ const CAFE = {
   telephone: "",            // ex. "04 70 12 34 56" — laisser vide masque le bouton d'appel
   adresse: "",              // ex. "12 avenue de Vichy"
   ville: "03700 Bellerive-sur-Allier",
-  facebook: "",             // lien complet de la page Facebook, ou vide
+  facebook: "https://www.facebook.com/profile.php?id=61591645226603", // lien complet de la page Facebook, ou vide
 
   // --- Horaires -----------------------------------------
   // jours : 1 = lundi … 6 = samedi, 0 = dimanche

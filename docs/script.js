@@ -31,9 +31,10 @@
     $("#carte").src = "https://www.google.com/maps?q=" + encodeURIComponent("Café de la Paix, " + CAFE.adresse + ", " + CAFE.ville) + "&output=embed";
   }
   if (CAFE.facebook) {
-    const fb = $(".js-facebook");
-    fb.querySelector("a").href = CAFE.facebook;
-    fb.hidden = false;
+    $$(".js-facebook").forEach((n) => {
+      (n.tagName === "A" ? n : n.querySelector("a")).href = CAFE.facebook;
+      n.hidden = false;
+    });
   }
 
   /* Formule */
