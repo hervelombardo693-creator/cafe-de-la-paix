@@ -7,7 +7,7 @@
 
 const CAFE = {
   // --- Coordonnées (à compléter) -------------------------
-  telephone: "",            // ex. "04 70 12 34 56" — laisser vide masque le bouton d'appel
+  telephone: "04 70 32 42 86", // laisser vide masque les boutons d'appel
   adresse: "",              // ex. "12 avenue de Vichy"
   ville: "03700 Bellerive-sur-Allier",
   facebook: "https://www.facebook.com/profile.php?id=61591645226603", // lien complet de la page Facebook, ou vide

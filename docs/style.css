@@ -276,6 +276,9 @@ p { margin: 0 0 1em; }
 .pied__logo { width: 140px; height: 140px; margin: 0 auto 1.2em; }
 .pied__petit { font-size: .78rem; opacity: .7; margin: 1.4em 0 0; }
 
+/* Bouton d'appel flottant (téléphone uniquement) */
+.appel-flottant { display: none; }
+
 /* ===== Tablette et mobile ===== */
 @media (max-width: 900px) {
   .jour { flex-basis: calc((100% - 18px) / 2); }
@@ -306,6 +309,16 @@ p { margin: 0 0 1em; }
   .nav a:not(.btn) { padding: .8em 0; border-bottom: 1px solid var(--creme-fonce); }
   .nav .btn { margin-top: 12px; text-align: center; }
   .nav__fb span { display: inline; }
+
+  .appel-flottant {
+    display: inline-flex; align-items: center; gap: .5em;
+    position: fixed; right: 16px; bottom: 16px; z-index: 30;
+    padding: .8em 1.2em; border-radius: 99px;
+    background: var(--or); color: var(--vert-nuit); font-weight: 600; text-decoration: none;
+    border: 2px solid var(--creme); box-shadow: 0 8px 24px rgba(0,0,0,.3);
+  }
+  .appel-flottant svg { width: 20px; height: 20px; }
+  .pied { padding-bottom: 96px; }
 
   .maison, .weekend__inner, .infos__inner { grid-template-columns: 1fr; }
   .maison__photo { max-width: 420px; }
