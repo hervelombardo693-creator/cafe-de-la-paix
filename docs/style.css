@@ -85,6 +85,7 @@ p { margin: 0 0 1em; }
 .nav .nav__fb { display: inline-flex; align-items: center; gap: .45em; color: var(--vert); }
 .nav .nav__fb .icone-fb { width: 22px; height: 22px; }
 .nav__fb span { display: none; }
+.entete__fb { display: none; }
 .lien-fb { display: inline-flex; align-items: center; gap: .5em; font-weight: 600; color: var(--vert); }
 .lien-fb--pied { color: var(--or-clair); text-decoration: none; }
 .lien-fb--pied:hover { color: var(--creme); }
@@ -308,7 +309,12 @@ p { margin: 0 0 1em; }
   .nav.ouvert { display: flex; }
   .nav a:not(.btn) { padding: .8em 0; border-bottom: 1px solid var(--creme-fonce); }
   .nav .btn { margin-top: 12px; text-align: center; }
-  .nav__fb span { display: inline; }
+  .nav__fb { display: none !important; } /* remplacé par l'icône toujours visible de l'en-tête */
+  .entete__fb {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; margin-left: auto; color: #1877f2;
+  }
+  .entete__fb .icone-fb { width: 26px; height: 26px; }
 
   .appel-flottant {
     display: inline-flex; align-items: center; gap: .5em;
