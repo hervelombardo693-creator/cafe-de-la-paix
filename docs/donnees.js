@@ -27,16 +27,21 @@ const CAFE = {
   // Dates au format AAAA-MM-JJ. Le jour en cours est mis en avant
   // automatiquement s'il fait partie de la semaine.
   // Pas d'entrée un jour : laisser entree: "".
+  // Jour de fermeture : { date: "…", ferme: "Restaurant fermé · jour férié" }
+  // (le bandeau « ouvert / fermé » et les horaires en tiennent compte).
   semaine: {
-    titre: "Du lundi 2 au vendredi 6 novembre",
+    titre: "Du lundi 9 au vendredi 13 novembre",
     jours: [
-      { date: "2026-11-02", entree: "Jambon – Macédoine",     plat: "Pluma de porc, moutarde à l'ancienne" },
-      { date: "2026-11-03", entree: "Foie gras",              plat: "Cuisses de poulet rôties, gratin dauphinois" },
-      { date: "2026-11-04", entree: "Salade piémontaise",     plat: "Canard à l'orange, tagliatelles" },
-      { date: "2026-11-05", entree: "Lasagnes",               plat: "Salade verte, jambon cru" },
-      { date: "2026-11-06", entree: "",                       plat: "Poisson du jour, sauce vierge, riz pilaf" }
+      { date: "2026-11-09", entree: "Rillettes et ses toasts",  plat: "Poulet basquaise et son riz" },
+      { date: "2026-11-10", entree: "Assiette de crudités",     plat: "Sauté de canard aux olives et ses tagliatelles" },
+      { date: "2026-11-11", ferme: "Restaurant fermé · jour férié" },
+      { date: "2026-11-12", entree: "Œufs mimosa",              plat: "Coq au vin et son écrasé de pommes de terre" },
+      { date: "2026-11-13", entree: "Entrée surprise",          plat: "Papillote de poisson aux trois agrumes et ses légumes frais poêlés" }
     ]
   },
+
+  // Autres fermetures exceptionnelles (congés…), au format AAAA-MM-JJ
+  fermetures: [],
 
   // --- À l'affiche : événements à venir ------------------
   // Une affiche par événement, à mettre dans le dossier images/.

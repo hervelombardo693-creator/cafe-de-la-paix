@@ -11,6 +11,12 @@
   const isoDuJour = [maintenant.getFullYear(), String(maintenant.getMonth() + 1).padStart(2, "0"), String(maintenant.getDate()).padStart(2, "0")].join("-");
   const heure = (h) => h.replace(":", " h ").replace(" h 00", " h");
   const enMinutes = (h) => { const [a, b] = h.split(":").map(Number); return a * 60 + b; };
+  const iso = (d) => [d.getFullYear(), String(d.getMonth() + 1).padStart(2, "0"), String(d.getDate()).padStart(2, "0")].join("-");
+  const dansNJours = (n) => { const d = new Date(maintenant); d.setDate(d.getDate() + n); return d; };
+
+  /* Jours fermés : fériés notés dans le menu + fermetures exceptionnelles */
+  const joursFermes = new Set([...(CAFE.fermetures || []), ...CAFE.semaine.jours.filter((j) => j.ferme).map((j) => j.date)]);
+  const ouvertLe = (d, service) => service.jours.includes(d.getDay()) && !joursFermes.has(iso(d));
 
   /* Téléphone, adresse, Facebook */
   const tel = CAFE.telephone.trim();
@@ -52,14 +58,19 @@
     if (j.date === isoDuJour) carte.classList.add("jour--aujourdhui");
     carte.appendChild(el("h3", "jour__nom", JOURS[d.getDay()]));
     carte.appendChild(el("p", "jour__date", d.getDate() + " " + MOIS[d.getMonth()]));
-    if (j.entree) carte.appendChild(plat("Entrée", j.entree));
-    carte.appendChild(plat("Plat", j.plat));
+    if (j.ferme) {
+      carte.classList.add("jour--ferme");
+      carte.appendChild(el("p", "jour__ferme", j.ferme));
+    } else {
+      if (j.entree) carte.appendChild(plat("Entrée", j.entree));
+      carte.appendChild(plat("Plat", j.plat));
+    }
     grille.appendChild(carte);
   });
 
   /* Bandeau défilant : les plats de la semaine (doublés pour une boucle sans à-coup) */
   const defile = $("#defile");
-  const items = CAFE.semaine.jours.map((j) => [JOURS[new Date(j.date + "T12:00:00").getDay()].toLowerCase(), j.plat]);
+  const items = CAFE.semaine.jours.map((j) => [JOURS[new Date(j.date + "T12:00:00").getDay()].toLowerCase(), j.ferme || j.plat]);
   items.push(["formule du midi", CAFE.formule.prix + " · " + CAFE.formule.contenu.join(", ").toLowerCase()]);
   [0, 1].forEach((copie) => items.forEach(([jour, texte]) => {
     const s = el("span", "defile__item");
@@ -116,38 +127,42 @@
     s.hidden = false;
   }
 
-  /* Tableau des horaires (lundi → dimanche) */
+  /* Tableau des horaires (lundi → dimanche) : signale un jour fermé dans les 7 prochains jours */
   const table = $("#horaires");
   [1, 2, 3, 4, 5, 6, 0].forEach((jour) => {
     const creneaux = [];
     if (CAFE.midi.jours.includes(jour)) creneaux.push(heure(CAFE.midi.ouverture) + " – " + heure(CAFE.midi.fermeture));
     if (CAFE.soir.jours.includes(jour)) creneaux.push(heure(CAFE.soir.ouverture) + " – " + heure(CAFE.soir.fermeture));
+    const prochaine = dansNJours((jour - aujourdhui + 7) % 7);
+    const exception = creneaux.length && joursFermes.has(iso(prochaine));
     const tr = el("tr");
-    if (!creneaux.length) tr.classList.add("ferme");
+    if (!creneaux.length || exception) tr.classList.add("ferme");
     if (jour === aujourdhui) tr.classList.add("aujourdhui");
     tr.appendChild(el("td", null, JOURS[jour]));
-    tr.appendChild(el("td", null, creneaux.length ? creneaux.join(" · ") : "Fermé"));
+    tr.appendChild(el("td", null, exception ? "Fermé le " + prochaine.getDate() + " " + MOIS[prochaine.getMonth()]
+      : creneaux.length ? creneaux.join(" · ") : "Fermé"));
     table.appendChild(tr);
   });
 
   /* Bandeau « ouvert / fermé » */
   const min = maintenant.getHours() * 60 + maintenant.getMinutes();
   const services = [CAFE.midi, CAFE.soir];
-  const enCours = services.find((s) => s.jours.includes(aujourdhui) && min >= enMinutes(s.ouverture) && min < enMinutes(s.fermeture));
+  const enCours = services.find((s) => ouvertLe(maintenant, s) && min >= enMinutes(s.ouverture) && min < enMinutes(s.fermeture));
   let message;
   if (enCours) {
     message = "Ouvert en ce moment, jusqu'à " + heure(enCours.fermeture);
   } else {
     const prochain = services
-      .filter((s) => s.jours.includes(aujourdhui) && min < enMinutes(s.ouverture))
+      .filter((s) => ouvertLe(maintenant, s) && min < enMinutes(s.ouverture))
       .sort((a, b) => enMinutes(a.ouverture) - enMinutes(b.ouverture))[0];
     if (prochain) {
       message = "Fermé · ouverture aujourd'hui à " + heure(prochain.ouverture);
     } else {
-      let j = (aujourdhui + 1) % 7, n = 1;
-      while (!CAFE.midi.jours.includes(j) && !CAFE.soir.jours.includes(j) && n < 7) { j = (j + 1) % 7; n++; }
-      const s = CAFE.midi.jours.includes(j) ? CAFE.midi : CAFE.soir;
-      message = "Fermé · réouverture " + (n === 1 ? "demain" : JOURS[j].toLowerCase()) + " à " + heure(s.ouverture);
+      let n = 1, d = dansNJours(1);
+      while (n < 30 && !services.some((s) => ouvertLe(d, s))) { n++; d = dansNJours(n); }
+      const s = services.filter((sv) => ouvertLe(d, sv)).sort((a, b) => enMinutes(a.ouverture) - enMinutes(b.ouverture))[0];
+      const quand = n === 1 ? "demain" : n < 7 ? JOURS[d.getDay()].toLowerCase() : "le " + d.getDate() + " " + MOIS[d.getMonth()];
+      message = (joursFermes.has(isoDuJour) ? "Fermé aujourd'hui" : "Fermé") + " · réouverture " + quand + " à " + heure(s.ouverture);
     }
   }
   const statut = $("#statut");

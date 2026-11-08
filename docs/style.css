@@ -185,6 +185,8 @@ p { margin: 0 0 1em; }
 .jour--weekend { text-decoration: none; display: flex; flex-direction: column; justify-content: center; border-style: dashed; }
 .jour--weekend:hover { background: #333a41; }
 .jour--weekend .jour__ligne { font-style: italic; }
+.jour--ferme { display: flex; flex-direction: column; justify-content: center; border-style: dashed; opacity: .8; }
+.jour__ferme { font-family: var(--titre); font-style: italic; font-size: 1.35rem; line-height: 1.25; color: var(--or-clair); margin: 0; }
 .menu__note { text-align: center; margin-top: 2em; font-size: .95rem; color: rgba(246,239,225,.75); }
 .menu__note a { color: var(--or-clair); }
 
