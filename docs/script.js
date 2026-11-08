@@ -57,6 +57,18 @@
     grille.appendChild(carte);
   });
 
+  /* Bandeau défilant : les plats de la semaine (doublés pour une boucle sans à-coup) */
+  const defile = $("#defile");
+  const items = CAFE.semaine.jours.map((j) => [JOURS[new Date(j.date + "T12:00:00").getDay()].toLowerCase(), j.plat]);
+  items.push(["formule du midi", CAFE.formule.prix + " · " + CAFE.formule.contenu.join(", ").toLowerCase()]);
+  [0, 1].forEach((copie) => items.forEach(([jour, texte]) => {
+    const s = el("span", "defile__item");
+    if (copie) s.setAttribute("aria-hidden", "true");
+    s.appendChild(el("b", null, jour));
+    s.appendChild(document.createTextNode(texte));
+    defile.appendChild(s);
+  }));
+
   /* À l'affiche : événements à venir, retirés une fois la date passée */
   const section = $("#affiche"), lienAffiche = $("#nav-affiche");
   /* La section ne s'affiche qu'une fois au moins une affiche chargée */
